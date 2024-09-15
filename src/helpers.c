@@ -79,3 +79,8 @@ void info_decimal(s21_decimal decimal) {
 
 
 }
+
+int get_sign(s21_decimal value){
+    int sign_bit = value.bits[0] >> 31 & 1;
+    return sign_bit;
+}
