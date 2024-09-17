@@ -84,3 +84,39 @@ int get_sign(s21_decimal value){
     int sign_bit = value.bits[0] >> 31 & 1;
     return sign_bit;
 }
+
+void set_sign_pos(s21_decimal *value){
+    value->bits[0] = value->bits[0] & 2147483647U;    
+}
+
+void set_sign_neg(s21_decimal *value){
+    value->bits[0] = ~(value->bits[0]) ^ 2147483647U;
+}
+
+void pause(void)
+{
+    int c;
+
+    do {
+        c = getchar();
+    } while ((c != '\n') && (c != EOF));
+}
+
+
+int get_complement(s21_decimal value, s21_decimal *result){
+
+    
+    s21_decimal one = {{0x0, 0x0, 0x0, 0x1}};
+    
+    result->bits[0] = value.bits[0];
+    result->bits[1] = ~value.bits[1];
+    result->bits[2] = ~value.bits[2];
+    result->bits[3] = ~value.bits[3];
+        
+    s21_add(*result, one, result);
+
+
+
+}
+
+
