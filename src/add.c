@@ -4,7 +4,10 @@
 
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
 
-    //leveling
+    //leveling добавить надо.
+
+    //добавил строку ниже чтобы XOR на знаки сделать. 
+    result->bits[0] = ((unsigned int)get_sign(value_1) ^ (unsigned int)get_sign(value_2)) << 31;
 
     result->bits[1] = value_1.bits[1] ^ value_2.bits[1];
     result->bits[2] = value_1.bits[2] ^ value_2.bits[2];
@@ -19,13 +22,18 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
         
 
         while (carry != 0){
-            //Перенос в следующий int если необходимо
 
             unsigned int siftedcarry = carry << 1;
             carry = result->bits[i] & siftedcarry;
 
             if((i != 1 && (siftedcarry >> 31 & 1) && (value_1.bits[i] >> 31 & 1)) || (i != 1 && (siftedcarry >> 31 & 1) && (value_2.bits[i] >> 31 & 1))){
                 if(result->bits[i - 1] == 0xFFFFFFFF && i == 3){
+
+                    //добавил этот if. Если в bits[1] все биты забиты единицами, то значит будет перенос на знак.
+                    if(result->bits[i - 2] == 0xFFFFFFFF){
+                        prob_sign_carry = 1;
+                    }
+                    //здесь единица добавляется. Соответственно если bits[1] = FFFFFFFF, то перенос на знак.
                     result->bits[i - 2] += 1;
                 }
                 
@@ -33,6 +41,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
             }
 
             result->bits[i] ^= siftedcarry;
+
 
             if((i == 1 && (siftedcarry >> 31 & 1) && (value_1.bits[i] >> 31 & 1)) || (i != 1 && (siftedcarry >> 31 & 1) && (value_2.bits[i] >> 31 & 1))){
                 prob_sign_carry = 1;
@@ -43,12 +52,12 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
     unsigned int value_1_sign = get_sign(value_1);
     unsigned int value_2_sign = get_sign(value_2);
 
+
+    //Всё снизу - блок определения знака.
     if((!value_1_sign && value_2_sign) || (value_1_sign && !value_2_sign)){
-        value_1_sign = value_1_sign << 31;
-        value_2_sign = value_2_sign << 31;
+
         prob_sign_carry = prob_sign_carry << 31;
-            
-        result->bits[0] ^= (value_1_sign ^ value_2_sign ^ prob_sign_carry);
+        result->bits[0] ^= prob_sign_carry;
     }
 
     if(value_1_sign && value_2_sign){
