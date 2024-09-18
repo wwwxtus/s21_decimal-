@@ -7,14 +7,6 @@ void printDecimal(const s21_decimal *dec) {
     printf("0x%08X%08X%08X%08X\n", dec->bits[0], dec->bits[1], dec->bits[2], dec->bits[3]);
 }
 
-//Очищает все биты decimal
-void s21_clear_decimal(s21_decimal *decimal) {
-    decimal->bits[0] = 0;
-    decimal->bits[1] = 0;
-    decimal->bits[2] = 0;
-    decimal->bits[3] = 0;
-}
-
 //Приравниваем decimal к единице
 s21_decimal s21_decimal_get_one(void) {
     s21_decimal result;

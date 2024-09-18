@@ -1,5 +1,7 @@
 #include "decimal.h"
 
+/* Выводим информацию о числе decimal, его двоичное представление, 16-ричное, 
+его экспоненту в двоичном виде и проверяем её на корректность */
 void info_decimal(s21_decimal decimal) {
     int wrong_usage_flag = 0;
     int wrong_exponent_flag = 0;
@@ -72,6 +74,7 @@ void info_decimal(s21_decimal decimal) {
     }
 }
 
+//Находим и определяем знаковый бит числа
 int get_sign(s21_decimal value) {
     int sign_bit = value.bits[0] >> 31 & 1;
     return sign_bit;
@@ -89,6 +92,7 @@ void pause(void) {
     } while ((c != '\n') && (c != EOF));
 }
 
+//Получаем доп. код числа 
 int get_complement(s21_decimal value, s21_decimal *result) {
     s21_decimal one = {{0x0, 0x0, 0x0, 0x1}};
 
@@ -154,6 +158,7 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
     }
 }
 
+//Обнуляем все биты числа decimal
 void get_zero(s21_decimal *value) {
     value->bits[0] = 0;
     value->bits[1] = 0;
