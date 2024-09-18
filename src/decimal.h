@@ -25,6 +25,12 @@ void set_sign_pos(s21_decimal *value);
 
 void set_sign_neg(s21_decimal *value);
 
+void shift_decimal_left(s21_decimal *value, int shift);
+
+void level_exponent(s21_decimal *value_1, s21_decimal *value_2);
+
+int get_exponent(s21_decimal value);
+
 
 
 #endif
