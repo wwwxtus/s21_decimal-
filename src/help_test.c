@@ -1,46 +1,26 @@
 #include "decimal.h"
 
+int main() {
+    // Пример двух Decimal чисел
+    // 26409387504754779197847983445
+    s21_decimal decimal2 = {{0x80000000, 0x00000000, 0x00000000, 0x0000000A}};
+    // 26409387
+    s21_decimal decimal1 = {{0x80000000, 0x00000000, 0x00000000, 0x00000005}};
+    // 26409387504754779197874392832
+    s21_decimal check = {{0x00000000, 0x55555555, 0x55555555, 0x53C25BAA}};
+    // alignScale(&decimal1, &decimal2);
 
+    // Результат вычитания
+    s21_decimal result;
+    info_decimal(decimal1);
+    info_decimal(decimal2);
+    s21_sub(decimal1, decimal2, &result);
+    // Печатаем результат
+    printf("Result: ");
+    printDecimal(&result);
 
-int main(void){
+    printf("check : ");
+    printDecimal(&check);
 
-    // -201180194235 | Обратный код сразу сделал
-    s21_decimal decimal = {0x800F0000, 0xFFFFFFFF, 0xFFFFFFD1, 0x28B9DA45};
-    
-    //  231180194235
-    s21_decimal decimal2 = {0x000F0000, 0x0, 0x2C, 0x833A41BB};
-    
-    // 30000000000 | 6fc23ac00
-    s21_decimal result = {0x000F0000, 0x0, 0x0, 0x0};
-
-
-    // ДЕМОНСТРАЦИЯ СУММЫ
-
-
-    //info_decimal(decimal);
-    //info_decimal(decimal2);
-    //s21_add(decimal, decimal2, &result);
-    //info_decimal(result);
-
-
-    // ДЕМОНСТРАЦИЯ СДВИГА
-
-
-    // s21_decimal decimal_shift = {0x000F0000, 0xF002000F, 0xF001600F, 0xF000400F};
-    // info_decimal(decimal_shift);
-    // shift_decimal_left(&decimal_shift, 4);
-    // info_decimal(decimal_shift);
-
-
-    // ДЕМОНСТРАЦИЯ УРАВНИВАНИЯ ЭКСПОНЕНТЫ
-
-
-    // s21_decimal level_test1 = {0x000F0000, 0x0, 0x0, 0x1};
-    // s21_decimal level_test2 = {0x000D0000, 0x0, 0x0, 0x1};
-    // info_decimal(level_test1);
-    // info_decimal(level_test2);
-    // level_exponent(&level_test1, &level_test2);
-    // info_decimal(level_test2);
-    
     return 0;
 }
