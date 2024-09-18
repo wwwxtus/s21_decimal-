@@ -10,7 +10,7 @@ void printDecimal(const s21_decimal *dec) {
 //Приравниваем decimal к единице
 s21_decimal s21_decimal_get_one(void) {
     s21_decimal result;
-    s21_clear_decimal(&result);
+    get_zero(&result);
     result.bits[3] = 1;
 
     return result;
