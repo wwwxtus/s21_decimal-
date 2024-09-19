@@ -144,54 +144,85 @@ void shift_decimal_left(s21_decimal *value, int shift) {
 }
 
 int get_exponent(s21_decimal value) {
-    unsigned int exponent = (value.bits[3] >> 16) & 255;
+    unsigned int exponent = ((unsigned int)value.bits[3] >> 16) & 255;
     return exponent;
 }
 
 void set_exponent(s21_decimal *value, int exp) {
-    value->bits[3] = (value->bits[3] & 0xFFFF0000) | (exp << 16);
+    int sign = get_sign(*value);
+    value->bits[3] = (value->bits[3] & 0x00000000) ^ (exp << 16);
+
+    if (sign == 1) {
+        set_sign_neg(value);
+    } else {
+        set_sign_pos(value);
+    }
 }
 
 void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
+
+    s21_decimal resultN = {{0, 0, 0, 0}};
+    
+
     if (get_exponent(*value_1) < get_exponent(*value_2)) {
         int exp_diff = get_exponent(*value_2) - get_exponent(*value_1);
+        set_exponent(value_1, get_exponent(*value_2));
+        set_exponent(&resultN, get_exponent(*value_2));
 
         for (int i = 0; i < exp_diff; i++) {
-            s21_decimal valueN = *value_1;
+            s21_decimal valueN;
+            valueN.bits[0] = value_1->bits[0];
+            valueN.bits[1] = value_1->bits[1];
+            valueN.bits[2] = value_1->bits[2];
+            valueN.bits[3] = value_1->bits[3];
 
             shift_decimal_left(value_1, 3);
             shift_decimal_left(&valueN, 1);
-            s21_add(*value_1, valueN, value_1);
+
+            s21_add(*value_1, valueN, &resultN);
+
+            value_1->bits[0] = resultN.bits[0];
+            value_1->bits[1] = resultN.bits[1];
+            value_1->bits[2] = resultN.bits[2];
 
 
         }
 
-        set_exponent(value_1, get_exponent(*value_2));
     }
 
     if (get_exponent(*value_1) > get_exponent(*value_2)) {
+
         int exp_diff = get_exponent(*value_1) - get_exponent(*value_2);
+        set_exponent(value_2, get_exponent(*value_1));
+        set_exponent(&resultN, get_exponent(*value_1));
 
         for (int i = 0; i < exp_diff; i++) {
-            s21_decimal valueN = *value_2;
+            s21_decimal valueN;
+
+            valueN.bits[0] = value_2->bits[0];
+            valueN.bits[1] = value_2->bits[1];
+            valueN.bits[2] = value_2->bits[2];
+            valueN.bits[3] = value_2->bits[3];
 
             shift_decimal_left(value_2, 3);
             shift_decimal_left(&valueN, 1);
 
-            if(i == 10){
+            if(i == 20){
                 info_decimal(*value_2);
                 info_decimal(valueN);
                 pause();
             }
-
-            s21_add(*value_2, valueN, value_2);
-
             
+            s21_add(*value_2, valueN, &resultN);
+
+            value_2->bits[0] = resultN.bits[0];
+            value_2->bits[1] = resultN.bits[1];
+            value_2->bits[2] = resultN.bits[2];
 
  
         }
 
-        set_exponent(value_2, get_exponent(*value_1));
+        
     }
 }
 

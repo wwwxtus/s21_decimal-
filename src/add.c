@@ -4,8 +4,6 @@
 
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
 
-    level_exponent(&value_1, &value_2);
-
     //Добавил строку ниже чтобы XOR на знаки сделать. Мы получаем маску для XOR на знак.
     result->bits[3] ^= (((unsigned int)get_sign(value_1) ^ (unsigned int)get_sign(value_2)) << 31);
     
@@ -24,12 +22,13 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
         while (carry != 0){
 
             unsigned int siftedcarry = carry << 1;
-            carry = result->bits[i] & siftedcarry;
 
             //Здесь идёт проверка на перенос.
-            if((i != 3 && (siftedcarry >> 31 & 1) && (value_1.bits[i] >> 31 & 1)) || (i != 1 && (siftedcarry >> 31 & 1) && (value_2.bits[i] >> 31 & 1))){
+            if((i != 3 && ((carry >> 31 & 1)) && (value_1.bits[i] >> 31 & 1)) 
+            || (i != 1 && (carry >> 31 & 1) && (value_2.bits[i] >> 31 & 1))
+            || (i == 3 && (carry >> 31 & 1) && (result->bits[i] >> 31 & 1))){
                 //Если мы находимся на bits[3], а bits[2] = FFFFFFFF -> (I)
-                if(result->bits[i + 1] == 0xFFFFFFFF && i == 1){
+                if(result->bits[i + 1] == 0xFFFFFFFF && i == 0){
 
                     //добавил этот if. Если в bits[1] все биты забиты единицами, то значит будет перенос на знак.
                     //Почему нужна проверка? смотри (I)
@@ -43,6 +42,8 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
                 //Если у нас прошла проверка на перенос, то в следующий bits добавить единицу.
                 result->bits[i + 1] = result->bits[i + 1] + 1;
             }
+            
+            carry = result->bits[i] & siftedcarry;
 
             result->bits[i] ^= siftedcarry;
 
@@ -63,7 +64,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
         //Переменная переноса либо 1 либо 0. Переносим это влево на 31 знак. То есть крайним левым делаем. Получается маска для XOR.
         prob_sign_carry = prob_sign_carry << 31;
         //Делаем XOR.
-        result->bits[0] ^= prob_sign_carry;
+        result->bits[3] ^= prob_sign_carry;
     }
     //Если два числа отрицательные, то соответственно знак отрицательный.
     if(value_1_sign && value_2_sign){

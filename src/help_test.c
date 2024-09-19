@@ -5,22 +5,22 @@
 int main(void){
 
     // -201180194235 | Обратный код сразу сделал
-    s21_decimal decimal = {0xA345, 0xFFF, 0x5, 0x000E0000};
+    s21_decimal decimal = {0xc6200000, 0xd78ebc5a, 0x0000000a, 0x00160000};
     
     //  231180194235
-    s21_decimal decimal2 = {0x1, 0x31AA, 0x5, 0x000F0000};
+    s21_decimal decimal2 = {0x18800000, 0x5e3af16b, 0x0000002b, 0x00160000};
     
     // 30000000000 | 6fc23ac00
-    s21_decimal result = {0x0, 0x0, 0x0, 0x000F0000};
+    s21_decimal result = {0x0, 0x0, 0x0, 0x00160000};
 
 
     // ДЕМОНСТРАЦИЯ СУММЫ
 
 
-    // info_decimal(decimal);
-    // info_decimal(decimal2);
-    // s21_add(decimal, decimal2, &result);
-    // info_decimal(result);
+    info_decimal(decimal);
+    info_decimal(decimal2);
+    s21_add(decimal, decimal2, &result);
+    info_decimal(result);
 
 
     //ДЕМОНСТРАЦИЯ СДВИГА ВЛЕВО
@@ -42,12 +42,13 @@ int main(void){
     //ДЕМОНСТРАЦИЯ УРАВНИВАНИЯ ЭКСПОНЕНТЫ
 
 
-    s21_decimal level_test1 = {0x1, 0x0, 0x0, 0x000F0000};
-    s21_decimal level_test2 = {0x1, 0x0, 0x0, 0x00040000};
-    info_decimal(level_test1);
-    info_decimal(level_test2);
-    level_exponent(&level_test1, &level_test2);
-    info_decimal(level_test2);
+    // s21_decimal level_test1 = {0x1, 0x0, 0x0, 0x00160000};
+    // s21_decimal level_test2 = {0x1, 0x0, 0x0, 0x00010000};
+    // info_decimal(level_test1);
+    // info_decimal(level_test2);
+    // level_exponent(&level_test1, &level_test2);
+    // info_decimal(level_test2);
+
     
     return 0;
 }
