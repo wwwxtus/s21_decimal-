@@ -29,7 +29,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
             //Здесь идёт проверка на перенос.
             if((i != 3 && (siftedcarry >> 31 & 1) && (value_1.bits[i] >> 31 & 1)) || (i != 1 && (siftedcarry >> 31 & 1) && (value_2.bits[i] >> 31 & 1))){
                 //Если мы находимся на bits[3], а bits[2] = FFFFFFFF -> (I)
-                if(result->bits[i + 1] == 0xFFFFFFFF && i == 3){
+                if(result->bits[i + 1] == 0xFFFFFFFF && i == 1){
 
                     //добавил этот if. Если в bits[1] все биты забиты единицами, то значит будет перенос на знак.
                     //Почему нужна проверка? смотри (I)

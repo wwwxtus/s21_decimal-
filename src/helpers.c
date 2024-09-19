@@ -85,9 +85,13 @@ int get_sign(s21_decimal value) {
     return sign_bit;
 }
 
-void set_sign_pos(s21_decimal *value) { value->bits[3] = value->bits[0] & 2147483647U; }
+void set_sign_pos(s21_decimal *value) { 
+    value->bits[3] = value->bits[3] & 2147483647U; 
+}
 
-void set_sign_neg(s21_decimal *value) { value->bits[3] = ~(value->bits[0]) ^ 2147483647U; }
+void set_sign_neg(s21_decimal *value) { 
+    value->bits[3] = ~(value->bits[3]) ^ 2147483647U; 
+}
 
 void pause(void) {
     int c;
@@ -173,7 +177,16 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
 
             shift_decimal_left(value_2, 3);
             shift_decimal_left(&valueN, 1);
+
+            if(i == 10){
+                info_decimal(*value_2);
+                info_decimal(valueN);
+                pause();
+            }
+
             s21_add(*value_2, valueN, value_2);
+
+            
 
  
         }

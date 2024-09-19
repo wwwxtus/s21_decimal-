@@ -43,7 +43,7 @@ int main(void){
 
 
     s21_decimal level_test1 = {0x1, 0x0, 0x0, 0x000F0000};
-    s21_decimal level_test2 = {0x1, 0x0, 0x0, 0x00050000};
+    s21_decimal level_test2 = {0x1, 0x0, 0x0, 0x00040000};
     info_decimal(level_test1);
     info_decimal(level_test2);
     level_exponent(&level_test1, &level_test2);
