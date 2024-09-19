@@ -4,10 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct decimal{
+#define POSITIVE 0
+#define NEGATIVE 1
+
+typedef struct decimal {
     int bits[4];
 } s21_decimal;
-
 
 void info_decimal(s21_decimal decimal);
 
@@ -31,6 +33,16 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2);
 
 int get_exponent(s21_decimal value);
 
+void get_zero(s21_decimal *value);
 
+int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+
+void printDecimal(const s21_decimal *dec);
+
+void s21_clear_decimal(s21_decimal *decimal);
+
+s21_decimal s21_decimal_get_one(void);
+
+int s21_negate(s21_decimal value, s21_decimal *result);
 
 #endif
