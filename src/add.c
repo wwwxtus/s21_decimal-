@@ -24,9 +24,9 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
             unsigned int siftedcarry = carry << 1;
 
             //Здесь идёт проверка на перенос.
-            if((i != 3 && ((carry >> 31 & 1)) && (value_1.bits[i] >> 31 & 1)) 
-            || (i != 1 && (carry >> 31 & 1) && (value_2.bits[i] >> 31 & 1))
-            || (i == 3 && (carry >> 31 & 1) && (result->bits[i] >> 31 & 1))){
+            if((i != 2 && ((carry >> 31 & 1)) && (value_1.bits[i] >> 31 & 1)) 
+            || (i != 2 && (carry >> 31 & 1) && (value_2.bits[i] >> 31 & 1))
+            || (i != 2 && (carry >> 31 & 1) && (result->bits[i] >> 31 & 1))){
                 //Если мы находимся на bits[3], а bits[2] = FFFFFFFF -> (I)
                 if(result->bits[i + 1] == 0xFFFFFFFF && i == 0){
 
@@ -62,7 +62,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
     //Всё снизу - блок определения знака.
     if((!value_1_sign && value_2_sign) || (value_1_sign && !value_2_sign)){
         //Переменная переноса либо 1 либо 0. Переносим это влево на 31 знак. То есть крайним левым делаем. Получается маска для XOR.
-        prob_sign_carry = prob_sign_carry << 31;
+        prob_sign_carry = prob_sign_carry;
         //Делаем XOR.
         result->bits[3] ^= prob_sign_carry;
     }

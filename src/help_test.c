@@ -5,10 +5,10 @@
 int main(void){
 
     // -201180194235 | Обратный код сразу сделал
-    s21_decimal decimal = {0xc6200000, 0xd78ebc5a, 0x0000000a, 0x00160000};
+    s21_decimal decimal = {0x1848FF16, 0xFFFFFFFF, 0xFFFFFFFF, 0x80160000};
     
     //  231180194235
-    s21_decimal decimal2 = {0x18800000, 0x5e3af16b, 0x0000002b, 0x00160000};
+    s21_decimal decimal2 = {0x153899FF, 0xFFFFFFFF, 0x0444, 0x00160000};
     
     // 30000000000 | 6fc23ac00
     s21_decimal result = {0x0, 0x0, 0x0, 0x00160000};
@@ -42,7 +42,7 @@ int main(void){
     //ДЕМОНСТРАЦИЯ УРАВНИВАНИЯ ЭКСПОНЕНТЫ
 
 
-    // s21_decimal level_test1 = {0x1, 0x0, 0x0, 0x00160000};
+    // s21_decimal level_test1 = {0x1, 0x0, 0x0, 0x00B0000};
     // s21_decimal level_test2 = {0x1, 0x0, 0x0, 0x00010000};
     // info_decimal(level_test1);
     // info_decimal(level_test2);
