@@ -10,8 +10,6 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
     result->bits[0] ^= (((unsigned int)get_sign(value_1) ^ (unsigned int)get_sign(value_2)) << 31);
     
     //Первый этап алгоритма суммы - XOR двух чисел.
-int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-    // leveling
 
     result->bits[1] = value_1.bits[1] ^ value_2.bits[1];
     result->bits[2] = value_1.bits[2] ^ value_2.bits[2];
