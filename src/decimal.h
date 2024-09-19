@@ -45,4 +45,6 @@ s21_decimal s21_decimal_get_one(void);
 
 int s21_negate(s21_decimal value, s21_decimal *result);
 
+void shift_decimal_right(s21_decimal *value, int shift);
+
 #endif
