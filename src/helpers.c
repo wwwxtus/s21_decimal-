@@ -111,7 +111,7 @@ int get_complement(s21_decimal value, s21_decimal *result) {
     result->bits[2] = ~value.bits[2];
     result->bits[3] = value.bits[3];
 
-    s21_add(*result, one, result);
+    add_binary(*result, one, result);
 
 }
 
@@ -181,7 +181,7 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
             shift_decimal_left(value_1, 3);
             shift_decimal_left(&valueN, 1);
 
-            s21_add(*value_1, valueN, &resultN);
+            add_binary(*value_1, valueN, &resultN);
 
             value_1->bits[0] = resultN.bits[0];
             value_1->bits[1] = resultN.bits[1];
@@ -215,7 +215,7 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
                 pause();
             }
             
-            s21_add(*value_2, valueN, &resultN);
+            add_binary(*value_2, valueN, &resultN);
 
             value_2->bits[0] = resultN.bits[0];
             value_2->bits[1] = resultN.bits[1];

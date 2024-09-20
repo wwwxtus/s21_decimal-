@@ -2,7 +2,7 @@
 
 
 
-int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
+int add_binary(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
 
     //Добавил строку ниже чтобы XOR на знаки сделать. Мы получаем маску для XOR на знак.
     
