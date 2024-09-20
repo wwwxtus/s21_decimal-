@@ -160,9 +160,7 @@ void set_exponent(s21_decimal *value, int exp) {
 }
 
 void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
-
     s21_decimal resultN = {{0, 0, 0, 0}};
-    
 
     if (get_exponent(*value_1) < get_exponent(*value_2)) {
         int exp_diff = get_exponent(*value_2) - get_exponent(*value_1);
@@ -221,8 +219,6 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
 
  
         }
-
-        
     }
 }
 

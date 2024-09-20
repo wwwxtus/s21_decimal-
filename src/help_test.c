@@ -5,10 +5,10 @@
 int main(void){
 
     // -201180194235 | Обратный код сразу сделал
-    s21_decimal decimal = {0x1848FF16, 0xFFFFFFFF, 0xFFFFFFFF, 0x80160000};
+    s21_decimal decimal = {0xc6200000, 0xd78ebc5a, 0x0000000a, 0x000F0000};
     
     //  231180194235
-    s21_decimal decimal2 = {0x153899FF, 0xFFFFFFFF, 0x0444, 0x00160000};
+    s21_decimal decimal2 = {0x18800000, 0x5e3af16b, 0x0000002b, 0x000F0000};
     
     // 30000000000 | 6fc23ac00
     s21_decimal result = {0x0, 0x0, 0x0, 0x00160000};
