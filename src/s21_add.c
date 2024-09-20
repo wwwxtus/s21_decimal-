@@ -8,8 +8,10 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     if (value_sign_1 == POSITIVE && value_sign_2 == POSITIVE) {
         add_binary(value_1, value_2, result);
     } else if (value_sign_1 == POSITIVE && value_sign_2 == NEGATIVE) {
+        set_sign_pos(&value_2);
         s21_sub(value_1, value_2, result);
-    } else if (value_sign_1 == NEGATIVE && value_sign_2 == NEGATIVE) {
+    } else if (value_sign_1 == NEGATIVE && value_sign_2 == POSITIVE) {
+        set_sign_pos(&value_1);
         s21_sub(value_2, value_1, result);
     } else if (value_sign_1 == NEGATIVE && value_sign_2 == NEGATIVE) {
         set_sign_pos(&value_1);

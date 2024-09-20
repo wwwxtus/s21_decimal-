@@ -111,7 +111,7 @@ int get_complement(s21_decimal value, s21_decimal *result) {
     result->bits[2] = ~value.bits[2];
     result->bits[3] = value.bits[3];
 
-    s21_add(*result, one, result);
+    add_binary(*result, one, result);
 
 }
 

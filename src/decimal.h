@@ -49,4 +49,5 @@ void shift_decimal_right(s21_decimal *value, int shift);
 
 void set_exponent(s21_decimal *value, int exp);
 
+int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 #endif

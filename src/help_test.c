@@ -5,22 +5,26 @@
 int main(void){
 
     // -201180194235 | Обратный код сразу сделал
-    s21_decimal decimal = {0x5, 0x0, 0x0, 0x00160000};
+    s21_decimal decimal = {0x5, 0x0, 0x0, 0x00000000};
     
     //  231180194235
-    s21_decimal decimal2 = {0x7, 0x0, 0x0, 0x80160000};
+    s21_decimal decimal2 = {0x7, 0x0, 0x0, 0x80000000};
     
     // 30000000000 | 6fc23ac00
-    s21_decimal result = {0x0, 0x0, 0x0, 0x00160000};
+    s21_decimal result = {0x0, 0x0, 0x0, 0x00000000};
 
 
     // ДЕМОНСТРАЦИЯ СУММЫ
-
 
     info_decimal(decimal);
     info_decimal(decimal2);
     s21_add(decimal, decimal2, &result);
     info_decimal(result);
+
+    // info_decimal(decimal);
+    // info_decimal(decimal2);
+    // s21_add(decimal, decimal2, &result);
+    // info_decimal(result);
 
 
     //ДЕМОНСТРАЦИЯ СДВИГА ВЛЕВО

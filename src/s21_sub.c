@@ -35,19 +35,18 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         get_complement(value_2, &value_2n);
         set_sign_neg(&value_2n);
         
-        s21_add(value_1, value_2n, result);
+        add_binary(value_1, value_2n, result);
 
         if(get_sign(*result) == NEGATIVE) {
             get_complement(*result, result);
         }
-
     }
     /* a - положитеьное, b - отрицательное => a - (-b) => a + b
        Сложить a и b 
     */ 
     else if (value_1_sign == POSITIVE && value_2_sign == NEGATIVE) {
         s21_negate(value_2, &value_2);
-        s21_add(value_1, value_2, result);
+        add_binary(value_1, value_2, result);
     } 
     /* a - отрицательное, b - положитеьное => -a - b => -(a + b)
        Сложить a и b
@@ -57,7 +56,7 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         s21_negate(value_1, &value_1);
         s21_negate(value_2, &value_2);
 
-        s21_add(value_1, value_2, result);
+        add_binary(value_1, value_2, result);
     } 
     /* a - отрицательное, b - отрицательное =>  -a - (-b) => -a + b
        Меньшее из a b число приводим к доп коду, далее a + b 
@@ -71,8 +70,7 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         s21_negate(value_2, &value_2n);
         get_complement(value_1, &value_1n);
 
-
-        s21_add(value_2n, value_1n, result);
+        add_binary(value_2n, value_1n, result);
 
         if(get_sign(*result) == 1){
             get_complement(*result, result);
