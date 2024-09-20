@@ -182,14 +182,10 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
             value_1->bits[0] = resultN.bits[0];
             value_1->bits[1] = resultN.bits[1];
             value_1->bits[2] = resultN.bits[2];
-
-
         }
-
     }
 
     if (get_exponent(*value_1) > get_exponent(*value_2)) {
-
         int exp_diff = get_exponent(*value_1) - get_exponent(*value_2);
         set_exponent(value_2, get_exponent(*value_1));
         set_exponent(&resultN, get_exponent(*value_1));

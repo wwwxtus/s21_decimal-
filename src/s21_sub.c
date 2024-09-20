@@ -64,10 +64,20 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         //Удалить потом
         printf("n n\n");
         
-        s21_decimal value_2n;
-        get_complement(value_2, &value_2n);
+        s21_decimal value_1n;
+        get_complement(value_1, &value_1n);
+        
+        // set_sign_neg(&value_1n);
 
-        s21_add(value_1, value_2n, result);
+        info_decimal(value_1n);
+
+        s21_add(value_2, value_1n, result);
+
+        info_decimal(*result);
+
+        if (get_sign(*result) == 1) {
+            get_complement(*result, result);
+        }
     }
 
     return err_code;

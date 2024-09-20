@@ -1,14 +1,10 @@
 #include "decimal.h"
 
-
-
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
-
     //Добавил строку ниже чтобы XOR на знаки сделать. Мы получаем маску для XOR на знак.
-    result->bits[3] ^= (((unsigned int)get_sign(value_1) ^ (unsigned int)get_sign(value_2)) << 31);
+    result->bits[3] = (((unsigned int)get_sign(value_1) ^ (unsigned int)get_sign(value_2)) << 31);
     
     //Первый этап алгоритма суммы - XOR двух чисел.
-
     result->bits[0] = value_1.bits[0] ^ value_2.bits[0];
     result->bits[1] = value_1.bits[1] ^ value_2.bits[1];
     result->bits[2] = value_1.bits[2] ^ value_2.bits[2];
@@ -67,9 +63,9 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
         result->bits[3] ^= prob_sign_carry;
     }
     //Если два числа отрицательные, то соответственно знак отрицательный.
-    if(value_1_sign && value_2_sign){
-        set_sign_neg(result);
-    }
+    // if(value_1_sign && value_2_sign){
+    //     set_sign_neg(result);
+    // }
     //Пока функция возвращает только 0. Надо добавить проверки на ошибки.
     return 0;
 }
