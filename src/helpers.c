@@ -105,12 +105,14 @@ void pause(void) {
 int get_complement(s21_decimal value, s21_decimal *result) {
     s21_decimal one = {{0x1, 0x0, 0x0, 0x0}};
 
+
     result->bits[0] = ~value.bits[0];
     result->bits[1] = ~value.bits[1];
     result->bits[2] = ~value.bits[2];
     result->bits[3] = value.bits[3];
 
     s21_add(*result, one, result);
+
 }
 
 void shift_decimal_right(s21_decimal *value, int shift) {

@@ -5,8 +5,11 @@
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
 
     //Добавил строку ниже чтобы XOR на знаки сделать. Мы получаем маску для XOR на знак.
-    result->bits[3] ^= (((unsigned int)get_sign(value_1) ^ (unsigned int)get_sign(value_2)) << 31);
-    
+
+    result->bits[3] = ((unsigned int)(get_sign(value_1) ^ get_sign(value_2)) << 31);
+
+    set_exponent(result, get_exponent(value_1));
+
     //Первый этап алгоритма суммы - XOR двух чисел.
 
     result->bits[0] = value_1.bits[0] ^ value_2.bits[0];
@@ -60,16 +63,13 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
 
 
     //Всё снизу - блок определения знака.
-    if((!value_1_sign && value_2_sign) || (value_1_sign && !value_2_sign)){
+    if((!value_1_sign && value_2_sign) || (value_1_sign && !value_2_sign) || (value_1_sign && value_2_sign)){
         //Переменная переноса либо 1 либо 0. Переносим это влево на 31 знак. То есть крайним левым делаем. Получается маска для XOR.
-        prob_sign_carry = prob_sign_carry;
+        prob_sign_carry = prob_sign_carry << 31;
         //Делаем XOR.
         result->bits[3] ^= prob_sign_carry;
     }
-    //Если два числа отрицательные, то соответственно знак отрицательный.
-    if(value_1_sign && value_2_sign){
-        set_sign_neg(result);
-    }
+
     //Пока функция возвращает только 0. Надо добавить проверки на ошибки.
     return 0;
 }
