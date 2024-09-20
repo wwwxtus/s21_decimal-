@@ -1,9 +1,6 @@
 #include "decimal.h"
 
-
-
 int add_binary(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
-
     //Добавил строку ниже чтобы XOR на знаки сделать. Мы получаем маску для XOR на знак.
     
     result->bits[3] = ((unsigned int)(get_sign(value_1) ^ get_sign(value_2)) << 31);
@@ -11,7 +8,6 @@ int add_binary(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
     set_exponent(result, get_exponent(value_1));
 
     //Первый этап алгоритма суммы - XOR двух чисел.
-
     result->bits[0] = value_1.bits[0] ^ value_2.bits[0];
     result->bits[1] = value_1.bits[1] ^ value_2.bits[1];
     result->bits[2] = value_1.bits[2] ^ value_2.bits[2];
@@ -21,9 +17,7 @@ int add_binary(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
     for (int i = 0; i < 3; i++) {
         unsigned int carry = value_1.bits[i] & value_2.bits[i];
         
-
         while (carry != 0){
-
             unsigned int siftedcarry = carry << 1;
 
             //Здесь идёт проверка на перенос.
@@ -64,8 +58,6 @@ int add_binary(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
             carry = result->bits[i] & siftedcarry;
 
             result->bits[i] ^= siftedcarry;
-
-            
         }
     }
 
