@@ -5,7 +5,7 @@
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
 
     //Добавил строку ниже чтобы XOR на знаки сделать. Мы получаем маску для XOR на знак.
-
+    
     result->bits[3] = ((unsigned int)(get_sign(value_1) ^ get_sign(value_2)) << 31);
 
     set_exponent(result, get_exponent(value_1));
@@ -42,19 +42,30 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
                     //(I) то мы добавляем единицу в bits[1]
                     result->bits[i + 2] += 1;
                 }
+                
+                if(i + 1 == 2){
+                    if(result->bits[2] == 0xFFFFFFFF){
+                        prob_sign_carry = 1;
+                    }
+                }
+
                 //Если у нас прошла проверка на перенос, то в следующий bits добавить единицу.
                 result->bits[i + 1] = result->bits[i + 1] + 1;
+            }
+
+            //Доп проверка на перенос знака. Надо это или нет - я хз. Но работает всё - не трогать. Тут если крайний левый бит 1 
+            //и бит переноса 1, то соответственно перенос на знак.
+            if((i == 2 && (carry >> 31 & 1) && (value_1.bits[i] >> 31 & 1)) 
+            || (i == 2 && (carry >> 31 & 1) && (value_2.bits[i] >> 31 & 1))
+            || (i == 2 && (carry >> 31 & 1) && (result->bits[i] >> 31 & 1))){
+                prob_sign_carry = 1;
             }
             
             carry = result->bits[i] & siftedcarry;
 
             result->bits[i] ^= siftedcarry;
 
-            //Доп проверка на перенос знака. Надо это или нет - я хз. Но работает всё - не трогать. Тут если крайний левый бит 1 
-            //и бит переноса 1, то соответственно перенос на знак.
-            if((i == 3 && (siftedcarry >> 31 & 1) && (value_1.bits[i] >> 31 & 1)) || (i != 1 && (siftedcarry >> 31 & 1) && (value_2.bits[i] >> 31 & 1))){
-                prob_sign_carry = 1;
-            }
+            
         }
     }
 
