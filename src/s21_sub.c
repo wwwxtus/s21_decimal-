@@ -63,6 +63,7 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     else if (value_1_sign == NEGATIVE && value_2_sign == NEGATIVE) {
         //Удалить потом
         printf("n n\n");
+        
         s21_decimal value_2n;
         get_complement(value_2, &value_2n);
 
