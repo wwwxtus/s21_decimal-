@@ -13,7 +13,7 @@ typedef struct decimal {
 
 void info_decimal(s21_decimal decimal);
 
-int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+int add_binary(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 
 int get_sign(s21_decimal value);
 
