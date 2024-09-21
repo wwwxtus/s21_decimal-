@@ -235,3 +235,9 @@ void get_zero(s21_decimal *value) {
     value->bits[2] = 0;
     value->bits[3] = 0;
 }
+
+int get_bit(s21_decimal decimal, int bit_position) {
+    int index = bit_position / 32; // Определяем индекс в массиве bits
+    int offset = bit_position % 32; // Определяем смещение внутри 32-битного числа
+    return (decimal.bits[index] >> offset) & 1; // Сдвиг и маскирование для получения конкретного бита
+}

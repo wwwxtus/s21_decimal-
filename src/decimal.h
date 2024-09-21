@@ -55,4 +55,8 @@ int s21_is_equal(s21_decimal value_1, s21_decimal value_2);
 
 int s21_is_not_equal(s21_decimal value_1, s21_decimal value_2);
 
+int s21_is_less(s21_decimal value_1, s21_decimal value_2);
+
+int get_bit(s21_decimal decimal, int bit_position);
+
 #endif
