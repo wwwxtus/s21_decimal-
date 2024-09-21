@@ -5,7 +5,7 @@
 int main(void){
 
     // -201180194235 | Обратный код сразу сделал
-    s21_decimal decimal = {0x9, 0x0, 0x0, 0x80000000};
+    s21_decimal decimal = {0x7, 0x0, 0x0, 0x00000000};
     
     //  231180194235
     s21_decimal decimal2 = {0x7, 0x0, 0x0, 0x80000000};
@@ -16,7 +16,7 @@ int main(void){
 
     // ДЕМОНСТРАЦИЯ СУММЫ
 
-    if(s21_is_less(decimal, decimal2) == 1) {
+    if(s21_is_less_or_equal(decimal, decimal2) == 1) {
         printf("YES");
     } else {
         printf("NO");

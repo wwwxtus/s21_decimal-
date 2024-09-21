@@ -25,7 +25,7 @@ int s21_is_less_helper(s21_decimal value_1, s21_decimal value_2) {
     if (value_sign_1 == NEGATIVE && value_sign_2 == POSITIVE) {
         result = 2;
     } else if (value_sign_1 == POSITIVE && value_sign_2 == NEGATIVE) {
-        result = 0;
+        result = 1;
     } else if (value_sign_1 == POSITIVE && value_sign_2 == POSITIVE){
         result = bitwise_comparison(value_1, value_2);
     } else if (value_sign_1 == NEGATIVE && value_sign_2 == NEGATIVE) {
@@ -44,9 +44,12 @@ int s21_is_less_helper(s21_decimal value_1, s21_decimal value_2) {
 }
 
 int s21_is_less(s21_decimal value_1, s21_decimal value_2) {
+    int flag = 0;
     if (s21_is_less_helper(value_1, value_2) == 2) {
-        return 1;
+        flag = 1;
     } else {
-        return 0;
+        flag = 0;
     }
+
+    return flag;
 }
