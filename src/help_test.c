@@ -16,11 +16,11 @@ int main(void){
 
     // ДЕМОНСТРАЦИЯ СУММЫ
 
-    if(s21_is_less_or_equal(decimal, decimal2) == 1) {
-        printf("YES");
-    } else {
-        printf("NO");
-    }
+    // if(s21_is_less_or_equal(decimal, decimal2) == 1) {
+    //     printf("YES");
+    // } else {
+    //     printf("NO");
+    // }
 
     // info_decimal(decimal);
     // info_decimal(decimal2);
@@ -54,6 +54,15 @@ int main(void){
     // level_exponent(&level_test1, &level_test2);
     // info_decimal(level_test2);
 
+
+    //ДЕМОНСТРАЦИЯ УМНОЖЕНИЯ
+
+    // s21_decimal mul_test1 = {0x00029a18, 0xFF, 0x0, 0x0};
+    // s21_decimal mul_test2 = {0x7, 0x0, 0x0, 0x0};
+    // info_decimal(mul_test1);
+    // info_decimal(mul_test2);    
+    // s21_mul(mul_test1, mul_test2, &result);
+    // info_decimal(result);
     
     return 0;
 }

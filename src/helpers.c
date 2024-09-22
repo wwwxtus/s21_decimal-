@@ -134,15 +134,18 @@ void shift_decimal_left(s21_decimal *value, int shift) {
     unsigned int temp = 0;
     unsigned int temp2 = 0;
 
-    unsigned int shift_temp = 32 - shift;
+    if(shift != 0){
+        unsigned int shift_temp = 32 - shift;
 
-    temp = (unsigned int)value->bits[0] >> shift_temp;
-    value->bits[0] = ((unsigned int)value->bits[0] << shift);
+        temp = (unsigned int)value->bits[0] >> shift_temp;
+        value->bits[0] = ((unsigned int)value->bits[0] << shift);
 
-    temp2 = (unsigned int)value->bits[1] >> shift_temp;
-    value->bits[1] = ((unsigned int)value->bits[1] << shift) ^ temp;
+        temp2 = (unsigned int)value->bits[1] >> shift_temp;
+        value->bits[1] = ((unsigned int)value->bits[1] << shift) ^ temp;
 
-    value->bits[2] = ((unsigned int)value->bits[2] << shift) ^ temp2;
+        value->bits[2] = ((unsigned int)value->bits[2] << shift) ^ temp2;
+    }
+    
 }
 
 int get_exponent(s21_decimal value) {
@@ -267,4 +270,21 @@ int s21_is_less_helper(s21_decimal value_1, s21_decimal value_2) {
     }
 
     return result;
+}
+
+int bitwise_comparison(s21_decimal value_1, s21_decimal value_2) {
+    int flag = 0;
+    int bit1 = 0;
+    int bit2 = 0;
+    for (int i = 95; !flag && i >= 0; --i) {
+        bit1 = get_bit(value_1, i);
+        bit2 = get_bit(value_2, i);
+        if (bit1 > bit2) {
+            flag = 1;
+        } else if (bit1 < bit2) {
+            flag = 2;
+        }
+    }
+
+    return flag;
 }

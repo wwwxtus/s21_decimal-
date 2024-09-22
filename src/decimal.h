@@ -42,6 +42,7 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2);
 void set_exponent(s21_decimal *value, int exp);
 void set_sign_pos(s21_decimal *value);
 void set_sign_neg(s21_decimal *value);
+int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 
 //Функции для сравнения чисел
 int s21_is_equal(s21_decimal value_1, s21_decimal value_2);
@@ -52,5 +53,6 @@ int s21_is_less_or_equal(s21_decimal value_1, s21_decimal value_2);
 int s21_is_greater(s21_decimal value_1, s21_decimal value_2);
 int s21_is_greater_or_equal(s21_decimal value_1, s21_decimal value_2);
 int get_bit(s21_decimal decimal, int bit_position);
+int bitwise_comparison(s21_decimal value_1, s21_decimal value_2);
 
 #endif
