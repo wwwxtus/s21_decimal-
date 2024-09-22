@@ -57,12 +57,12 @@ int main(void){
 
     //ДЕМОНСТРАЦИЯ УМНОЖЕНИЯ
 
-    // s21_decimal mul_test1 = {0x00029a18, 0xFF, 0x0, 0x0};
-    // s21_decimal mul_test2 = {0x7, 0x0, 0x0, 0x0};
-    // info_decimal(mul_test1);
-    // info_decimal(mul_test2);    
-    // s21_mul(mul_test1, mul_test2, &result);
-    // info_decimal(result);
+    s21_decimal mul_test1 = {0x00029a18, 0xFFFF, 0x2, 0x0};
+    s21_decimal mul_test2 = {0x17, 0x0, 0x0, 0x0};
+    info_decimal(mul_test1);
+    info_decimal(mul_test2);    
+    s21_mul(mul_test1, mul_test2, &result);
+    info_decimal(result);
     
     return 0;
 }
