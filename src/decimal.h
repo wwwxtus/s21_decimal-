@@ -7,10 +7,17 @@
 #define POSITIVE 0
 #define NEGATIVE 1
 
+
 typedef struct decimal {
     int bits[4];
 } s21_decimal;
 
+enum errors{
+    OK = 0,
+    TOO_LARGE = 1,
+    TOO_SMALL = 2,
+    DIVISION_BY_ZERO = 3,
+};
 
 //Хз что за функции
 void set_opposite_sign(s21_decimal *value, int pos_or_neg);
@@ -43,6 +50,7 @@ void set_exponent(s21_decimal *value, int exp);
 void set_sign_pos(s21_decimal *value);
 void set_sign_neg(s21_decimal *value);
 int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 
 //Функции для сравнения чисел
 int s21_is_equal(s21_decimal value_1, s21_decimal value_2);

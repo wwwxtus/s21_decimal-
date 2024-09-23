@@ -139,7 +139,7 @@ void shift_decimal_left(s21_decimal *value, int shift) {
         if(shift > 32){
             shift = 32;
         }
-        
+
         unsigned int shift_temp = 32 - shift;
 
         temp = (unsigned int)value->bits[0] >> shift_temp;
@@ -293,3 +293,4 @@ int bitwise_comparison(s21_decimal value_1, s21_decimal value_2) {
 
     return flag;
 }
+
