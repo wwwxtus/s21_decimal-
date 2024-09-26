@@ -52,6 +52,9 @@ void set_sign_neg(s21_decimal *value);
 int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 
+int whole_division(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+void s21_truncate (s21_decimal value, s21_decimal *result);
+
 //Функции для сравнения чисел
 int s21_is_equal(s21_decimal value_1, s21_decimal value_2);
 int s21_is_not_equal(s21_decimal value_1, s21_decimal value_2);

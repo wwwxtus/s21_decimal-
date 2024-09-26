@@ -64,11 +64,26 @@ int main(void){
     // s21_mul(mul_test1, mul_test2, &result);
     // info_decimal(result);
 
-    s21_decimal div_test1 = {0x54E39FE, 0x0, 0x0, 0x0};
-    s21_decimal div_test2 = {0x14DE, 0x0, 0x0, 0x0};
-    info_decimal(div_test1);
-    info_decimal(div_test2);
-    s21_div(div_test1, div_test2, &result);
+    // s21_decimal div_test1 = {0x54E39FE, 0x0, 0x0, 0x0};
+    // s21_decimal div_test2 = {0x14DE, 0x0, 0x0, 0x0};
+    // info_decimal(div_test1);
+    // info_decimal(div_test2);
+    // s21_div(div_test1, div_test2, &result);
+    // info_decimal(result);
+
+
+    // s21_decimal exp_test = {0x145, 0x0, 0x0, 0x0};
+    // s21_decimal exponent = {0x0, 0x0, 0x0, 0x0};
+    // set_exponent(&exponent, 26);
+    // info_decimal(exp_test);
+    // level_exponent(&exponent, &exp_test);
+    // info_decimal(exp_test);
+
+    //Truncate test
+
+    s21_decimal to_zero = {0x44DAB9, 0x0, 0x0, 0x00050000};
+    info_decimal(to_zero);
+    s21_truncate(to_zero, &result);
     info_decimal(result);
     
     return 0;

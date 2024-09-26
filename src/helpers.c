@@ -173,7 +173,6 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
 
     s21_decimal resultN = {{0, 0, 0, 0}};
     
-
     if (get_exponent(*value_1) < get_exponent(*value_2)) {
         int exp_diff = get_exponent(*value_2) - get_exponent(*value_1);
         set_exponent(value_1, get_exponent(*value_2));
@@ -195,9 +194,7 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
             value_1->bits[1] = resultN.bits[1];
             value_1->bits[2] = resultN.bits[2];
 
-
         }
-
     }
 
     if (get_exponent(*value_1) > get_exponent(*value_2)) {
@@ -217,22 +214,13 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
             shift_decimal_left(value_2, 3);
             shift_decimal_left(&valueN, 1);
 
-            if(i == 20){
-                info_decimal(*value_2);
-                info_decimal(valueN);
-                pause();
-            }
-            
             s21_add(*value_2, valueN, &resultN);
 
             value_2->bits[0] = resultN.bits[0];
             value_2->bits[1] = resultN.bits[1];
             value_2->bits[2] = resultN.bits[2];
 
- 
         }
-
-        
     }
 }
 
@@ -294,3 +282,58 @@ int bitwise_comparison(s21_decimal value_1, s21_decimal value_2) {
     return flag;
 }
 
+
+void s21_truncate(s21_decimal value, s21_decimal *result){
+    int exponent = get_exponent(value);
+    int y = exponent - 1;
+
+    s21_decimal TEN = {0xA, 0x0, 0x0, 0x0};
+    set_exponent(&TEN, exponent - y);
+    level_exponent(&value, &TEN);
+    whole_division(value, TEN, result);
+
+    set_exponent(result, 0);
+}
+
+int whole_division(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
+
+    s21_decimal ONE = {0x1, 0x0, 0x0, 0x0};
+    s21_decimal ZERO = {0x0, 0x0, 0x0, 0x0};
+
+    s21_decimal dividend = value_1;
+    s21_decimal divisor = value_2;
+
+    int dividend_sign = get_sign(dividend);
+    int divisor_sign = get_sign(divisor);
+    set_sign_pos(&dividend);
+    set_sign_pos(&divisor);
+
+    set_exponent(&ONE, get_exponent(dividend));
+    set_exponent(result, get_exponent(dividend));
+    set_exponent(&ZERO, get_exponent(dividend));
+
+    while(s21_is_greater_or_equal(dividend, divisor)){
+        s21_sub(dividend, divisor, &dividend);
+        s21_add(*result, ONE, result);
+    }
+
+    // info_decimal(dividend);
+    // pause();
+    
+    // if(!s21_is_equal(dividend, ZERO)){
+    //     s21_decimal remainder = dividend;
+    //     s21_decimal exponent = {0x0, 0x0, 0x0, 0x0};
+    //     set_exponent(&exponent, 25);
+    //     level_exponent(&remainder, &exponent);
+    //     info_decimal(remainder);
+    //     pause();
+    // }
+
+    if(dividend_sign != divisor_sign){
+        set_sign_neg(result);
+    }else if(dividend_sign && divisor_sign){
+        set_sign_pos(result);
+    }
+
+
+}
