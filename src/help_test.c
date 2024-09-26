@@ -81,10 +81,23 @@ int main(void){
 
     //Truncate test
 
-    s21_decimal to_zero = {0x44DAB9, 0x0, 0x0, 0x00050000};
-    info_decimal(to_zero);
-    s21_truncate(to_zero, &result);
-    info_decimal(result);
+    // s21_decimal to_zero = {0x44DAB9, 0x0, 0x0, 0x00050000};
+    // info_decimal(to_zero);
+    // s21_truncate(to_zero, &result);
+    // info_decimal(result);
+
+    //FROM INT TEST
+
+    // int test_int = 10923802;
+    // s21_from_int_to_decimal(test_int, &result);
+    // info_decimal(result);
+
+    //FROM DECIMAL TO INT TEST
+
+    int test_int = 0;
+    s21_decimal to_int = {0x44DAB9, 0x0, 0x0, 0x80030000};
+    s21_from_decimal_to_int(to_int, &test_int);
+    printf("%d", test_int);
     
     return 0;
 }

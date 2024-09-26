@@ -282,19 +282,6 @@ int bitwise_comparison(s21_decimal value_1, s21_decimal value_2) {
     return flag;
 }
 
-
-void s21_truncate(s21_decimal value, s21_decimal *result){
-    int exponent = get_exponent(value);
-    int y = exponent - 1;
-
-    s21_decimal TEN = {0xA, 0x0, 0x0, 0x0};
-    set_exponent(&TEN, exponent - y);
-    level_exponent(&value, &TEN);
-    whole_division(value, TEN, result);
-
-    set_exponent(result, 0);
-}
-
 int whole_division(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
 
     s21_decimal ONE = {0x1, 0x0, 0x0, 0x0};
@@ -316,18 +303,6 @@ int whole_division(s21_decimal value_1, s21_decimal value_2, s21_decimal *result
         s21_sub(dividend, divisor, &dividend);
         s21_add(*result, ONE, result);
     }
-
-    // info_decimal(dividend);
-    // pause();
-    
-    // if(!s21_is_equal(dividend, ZERO)){
-    //     s21_decimal remainder = dividend;
-    //     s21_decimal exponent = {0x0, 0x0, 0x0, 0x0};
-    //     set_exponent(&exponent, 25);
-    //     level_exponent(&remainder, &exponent);
-    //     info_decimal(remainder);
-    //     pause();
-    // }
 
     if(dividend_sign != divisor_sign){
         set_sign_neg(result);

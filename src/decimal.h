@@ -66,4 +66,8 @@ int s21_is_greater_or_equal(s21_decimal value_1, s21_decimal value_2);
 int get_bit(s21_decimal decimal, int bit_position);
 int bitwise_comparison(s21_decimal value_1, s21_decimal value_2);
 
+//Функции преобразования из/в другие типы данных
+int s21_from_int_to_decimal(int src, s21_decimal *dst);
+int s21_from_decimal_to_int(s21_decimal src, int *dst);
+
 #endif
