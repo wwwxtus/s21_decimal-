@@ -14,9 +14,9 @@ int main(void){
     s21_decimal result = {0x0, 0x0, 0x0, 0x00000000};
 
 
-    s21_div(decimal, decimal2, &result);
+    //s21_div(decimal, decimal2, &result);
 
-    info_decimal(result);
+    //info_decimal(result);
 
     
     // ДЕМОНСТРАЦИЯ СУММЫ
@@ -77,12 +77,12 @@ int main(void){
     // info_decimal(result);
 
 
-    s21_decimal exp_test = {0x145, 0x0, 0x0, 0x0};
-    s21_decimal exponent = {0x0, 0x0, 0x0, 0x0};
-    set_exponent(&exponent, 27);
-    info_decimal(exp_test);
-    level_exponent(&exponent, &exp_test);
-    info_decimal(exp_test);
+    // s21_decimal exp_test = {0x145, 0x0, 0x0, 0x0};
+    // s21_decimal exponent = {0x0, 0x0, 0x0, 0x0};
+    // set_exponent(&exponent, 27);
+    // info_decimal(exp_test);
+    // level_exponent(&exponent, &exp_test);
+    // info_decimal(exp_test);
 
     //Truncate test
 
@@ -113,8 +113,16 @@ int main(void){
 
     //ROUND TEST
 
-    s21_decimal value = {0x5, 0x0, 0x0, 0x80020000};
-    s21_round(value, &result);
+    // s21_decimal value = {0x5, 0x0, 0x0, 0x80020000};
+    // s21_round(value, &result);
+    // info_decimal(result);
+
+    //BINARY DIV TEST
+
+    s21_decimal value = {0xFFF123F, 0xFFFFFFFF, 0xFFFFFF, 0x00000000};
+    s21_decimal divisor = {0x5, 0x0, 0x0, 0x0};
+    binary_search_div(value, divisor, &result);
+    info_decimal(value);
     info_decimal(result);
 
     

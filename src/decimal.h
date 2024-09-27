@@ -78,5 +78,6 @@ int s21_round(s21_decimal value, s21_decimal *result);
 //Подру-у-у-учны-ы-ы-ы-й
 void get_float_part(s21_decimal value, s21_decimal *float_part);
 int is_even(s21_decimal value);
+void binary_search_div(s21_decimal value1, s21_decimal value2, s21_decimal *result);
 
 #endif
