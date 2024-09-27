@@ -4,6 +4,7 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
 
     s21_decimal ONE = {0x1, 0x0, 0x0, 0x0};
     s21_decimal ZERO = {0x0, 0x0, 0x0, 0x0};
+    s21_decimal TEN = {0xA, 0x0, 0x0, 0x0};
 
     s21_decimal dividend = value_1;
     s21_decimal divisor = value_2;
