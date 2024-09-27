@@ -312,3 +312,21 @@ int whole_division(s21_decimal value_1, s21_decimal value_2, s21_decimal *result
 
 
 }
+
+
+int decimal_len(s21_decimal value){
+    
+    s21_decimal ONE = {0x1, 0x0, 0x0, 0x0};
+    s21_decimal NINE = {0x9, 0x0, 0x0, 0x0};
+
+    int num_len = 0;
+    s21_decimal value_normalized;
+    get_zero(&value_normalized);
+
+    while(!(s21_is_greater_or_equal(value_normalized, ONE) && s21_is_less_or_equal(value_normalized, NINE))){
+        set_exponent(&value, get_exponent(value) + 1);
+        get_zero(&value_normalized);
+        s21_truncate(value, &value_normalized);
+        num_len++;
+    }
+}

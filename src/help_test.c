@@ -64,12 +64,12 @@ int main(void){
     // s21_mul(mul_test1, mul_test2, &result);
     // info_decimal(result);
 
-    // s21_decimal div_test1 = {0x54E39FE, 0x0, 0x0, 0x0};
-    // s21_decimal div_test2 = {0x14DE, 0x0, 0x0, 0x0};
-    // info_decimal(div_test1);
-    // info_decimal(div_test2);
-    // s21_div(div_test1, div_test2, &result);
-    // info_decimal(result);
+    s21_decimal div_test1 = {0x1655, 0x0, 0x0, 0x0};
+    s21_decimal div_test2 = {0x35, 0x0, 0x0, 0x0};
+    info_decimal(div_test1);
+    info_decimal(div_test2);
+    s21_div(div_test1, div_test2, &result);
+    info_decimal(result);
 
 
     // s21_decimal exp_test = {0x145, 0x0, 0x0, 0x0};
@@ -94,10 +94,10 @@ int main(void){
 
     //FROM DECIMAL TO INT TEST
 
-    int test_int = 0;
-    s21_decimal to_int = {0x44DAB9, 0x0, 0x0, 0x80030000};
-    s21_from_decimal_to_int(to_int, &test_int);
-    printf("%d", test_int);
+    // int test_int = 0;
+    // s21_decimal to_int = {0x44DAB9, 0x0, 0x0, 0x80030000};
+    // s21_from_decimal_to_int(to_int, &test_int);
+    // printf("%d", test_int);
     
     return 0;
 }
