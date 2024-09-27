@@ -220,11 +220,7 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
             value_2->bits[0] = resultN.bits[0];
             value_2->bits[1] = resultN.bits[1];
             value_2->bits[2] = resultN.bits[2];
-
- 
         }
-
-        
     }
 }
 
