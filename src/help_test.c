@@ -5,7 +5,7 @@
 int main(void){
 
     // -201180194235 | Обратный код сразу сделал
-    s21_decimal decimal = {0x7, 0x0, 0x0, 0x00000000};
+    s21_decimal decimal = {0xD, 0x0, 0x0, 0x00000000};
     
     //  231180194235
     s21_decimal decimal2 = {0x7, 0x0, 0x0, 0x80000000};
@@ -14,6 +14,11 @@ int main(void){
     s21_decimal result = {0x0, 0x0, 0x0, 0x00000000};
 
 
+    s21_div(decimal, decimal2, &result);
+
+    info_decimal(result);
+
+    
     // ДЕМОНСТРАЦИЯ СУММЫ
 
     // if(s21_is_less_or_equal(decimal, decimal2) == 1) {
@@ -72,12 +77,12 @@ int main(void){
     // info_decimal(result);
 
 
-    // s21_decimal exp_test = {0x145, 0x0, 0x0, 0x0};
-    // s21_decimal exponent = {0x0, 0x0, 0x0, 0x0};
-    // set_exponent(&exponent, 26);
-    // info_decimal(exp_test);
-    // level_exponent(&exponent, &exp_test);
-    // info_decimal(exp_test);
+    s21_decimal exp_test = {0x145, 0x0, 0x0, 0x0};
+    s21_decimal exponent = {0x0, 0x0, 0x0, 0x0};
+    set_exponent(&exponent, 27);
+    info_decimal(exp_test);
+    level_exponent(&exponent, &exp_test);
+    info_decimal(exp_test);
 
     //Truncate test
 
