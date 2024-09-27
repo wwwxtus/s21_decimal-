@@ -94,10 +94,24 @@ int main(void){
 
     //FROM DECIMAL TO INT TEST
 
-    int test_int = 0;
-    s21_decimal to_int = {0x44DAB9, 0x0, 0x0, 0x80030000};
-    s21_from_decimal_to_int(to_int, &test_int);
-    printf("%d", test_int);
+    // int test_int = 0;
+    // s21_decimal to_int = {0x44DAB9, 0x0, 0x0, 0x80030000};
+    // s21_from_decimal_to_int(to_int, &test_int);
+    // printf("%d", test_int);
+
+
+    //FLOOR TEST
+
+    // s21_decimal value = {0x84210, 0x0, 0x0, 0x80020000};
+    // s21_floor(value, &result);
+    // info_decimal(result);
+
+    //ROUND TEST
+
+    s21_decimal value = {0x5, 0x0, 0x0, 0x80020000};
+    s21_round(value, &result);
+    info_decimal(result);
+
     
     return 0;
 }

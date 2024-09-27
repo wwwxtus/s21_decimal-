@@ -70,4 +70,13 @@ int bitwise_comparison(s21_decimal value_1, s21_decimal value_2);
 int s21_from_int_to_decimal(int src, s21_decimal *dst);
 int s21_from_decimal_to_int(s21_decimal src, int *dst);
 
+
+//Округление
+int s21_floor(s21_decimal value, s21_decimal *result);
+int s21_round(s21_decimal value, s21_decimal *result);
+
+//Подру-у-у-учны-ы-ы-ы-й
+void get_float_part(s21_decimal value, s21_decimal *float_part);
+int is_even(s21_decimal value);
+
 #endif

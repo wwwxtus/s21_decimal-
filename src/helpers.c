@@ -312,3 +312,28 @@ int whole_division(s21_decimal value_1, s21_decimal value_2, s21_decimal *result
 
 
 }
+
+int is_even(s21_decimal value) {
+    int result = 0;
+
+    result = value.bits[0] & 1;
+
+    return !result;
+
+    //1 - число чётное
+    //0 - число нечетное
+}
+
+void get_float_part(s21_decimal value, s21_decimal *float_part) {
+    
+    s21_decimal whole_part = {0x0, 0x0, 0x0, 0x0};
+    s21_decimal whole_part_temp = {0x0, 0x0, 0x0, 0x0};
+
+    set_sign_pos(&value);
+    s21_truncate(value, &whole_part);
+    whole_part_temp = whole_part;
+    level_exponent(&whole_part_temp, &value);
+    s21_sub(value, whole_part_temp, float_part);
+    set_exponent(float_part, get_exponent(value));
+
+}
