@@ -22,7 +22,7 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
     set_exponent(result, get_exponent(value_1));
     set_exponent(&result_temp, get_exponent(value_1));
 
-    for(int i = 0; i < 94; i += 2){
+    for(int i = 0; i < 95; i += 2){
 
         //Первое промежуточное число после умножения
         value_1n.bits[0] = value_1.bits[0] & (get_bit(value_2, i) == 1 ? 0xFFFFFFFF : 0);

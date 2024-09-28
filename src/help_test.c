@@ -119,12 +119,27 @@ int main(void){
 
     //BINARY DIV TEST
 
-    s21_decimal value = {0xFFF123F, 0xFFFFFFFF, 0xFFFFFF, 0x00000000};
-    s21_decimal divisor = {0x5, 0x0, 0x0, 0x0};
+    s21_decimal value = {0xFFF123F, 0xF452FFF, 0xFFFFF, 0x00000000};
+    s21_decimal divisor = {0xFFF1FF, 0x45, 0x0, 0x0};
     binary_search_div(value, divisor, &result);
     info_decimal(value);
+    info_decimal(divisor);
     info_decimal(result);
 
+
+    //SHIFT RIGHT TEST
+
+    // s21_decimal value = {0xFF, 0xF000000F, 0x21FF, 0x0};
+    // info_decimal(value);
+    // shift_decimal_right(&value, 1);
+    // info_decimal(value);
+
+    //SHIFT LEFT TEST
+
+    // s21_decimal value = {0xF, 0x0, 0x0, 0x0};
+    // info_decimal(value);
+    // shift_decimal_left(&value, 90);
+    // info_decimal(value);
     
     return 0;
 }

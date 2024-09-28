@@ -16,7 +16,7 @@ void binary_search_div(s21_decimal value1, s21_decimal value2, s21_decimal *resu
 
     while(s21_is_less_or_equal(low, high)){
 
-        // mid = (low + high) / 2;
+        // mid = low + (high - low) / 2;
         s21_decimal high_minus_low;
         s21_sub(high, low, &high_minus_low);
         shift_decimal_right(&high_minus_low, 1);

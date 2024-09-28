@@ -136,19 +136,25 @@ void shift_decimal_left(s21_decimal *value, int shift) {
 
     if(shift != 0){
 
-        if(shift > 32){
-            shift = 32;
+        if(shift >= 32){
+            value->bits[2] = value->bits[1];
+            value->bits[1] = value->bits[0];
+            value->bits[0] = 0;
+            shift_decimal_left(value, shift - 32);
         }
 
-        unsigned int shift_temp = 32 - shift;
+        if(shift <= 31){
+            unsigned int shift_temp = 32 - shift;
 
-        temp = (unsigned int)value->bits[0] >> shift_temp;
-        value->bits[0] = ((unsigned int)value->bits[0] << shift);
+            temp = (unsigned int)value->bits[0] >> shift_temp;
+            value->bits[0] = ((unsigned int)value->bits[0] << shift);
 
-        temp2 = (unsigned int)value->bits[1] >> shift_temp;
-        value->bits[1] = ((unsigned int)value->bits[1] << shift) ^ temp;
+            temp2 = (unsigned int)value->bits[1] >> shift_temp;
+            value->bits[1] = ((unsigned int)value->bits[1] << shift) ^ temp;
 
-        value->bits[2] = ((unsigned int)value->bits[2] << shift) ^ temp2;
+            value->bits[2] = ((unsigned int)value->bits[2] << shift) ^ temp2;
+        }
+        
     }
     
 }
