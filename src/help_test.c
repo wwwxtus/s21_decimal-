@@ -126,6 +126,7 @@ int main(void){
     info_decimal(divisor);
     info_decimal(result);
 
+
     //SHIFT RIGHT TEST
 
     // s21_decimal value = {0xFF, 0xF000000F, 0x21FF, 0x0};
