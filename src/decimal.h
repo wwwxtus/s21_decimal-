@@ -82,5 +82,7 @@ int get_normalized_len(s21_decimal value);
 int add_overflow_check(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 void get_num_to_max_exponent(s21_decimal *value);
 s21_decimal s21_decimal_get_inf(void);
+int s21_max(int a, int b);
+int s21_min(int a, int b);
 
 #endif

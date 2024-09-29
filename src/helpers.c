@@ -450,3 +450,11 @@ s21_decimal s21_decimal_get_inf(void) {
 
     return result;
 }
+
+int s21_max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+int s21_min(int a, int b) {
+    return (a < b)? a : b;
+}

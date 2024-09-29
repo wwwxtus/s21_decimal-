@@ -150,6 +150,9 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         int sign1 = get_sign(value_1);
         int sign2 = get_sign(value_2);
 
+        int exp1 = get_exponent(value_1);
+        int exp2 = get_exponent(value_2);
+
         set_exponent(&value_1, 0);
         set_exponent(&value_2, 0);
 
@@ -165,8 +168,13 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
 
         count = s21_div_remainder(value_1, value_2, &res, &remainder);
         *result = res;
-        set_exponent(result, count);
-
+        if (exp1 == 0 && exp2 == 0) { 
+            set_exponent(result, count);
+        } else {
+            int exp_max = s21_max(exp1, exp2);
+            int exp_min = s21_min(exp1, exp2);
+            set_exponent(result, exp_max - exp_min);
+        }
         if (sign1 != sign2) {
             set_sign_neg(result);
         }
