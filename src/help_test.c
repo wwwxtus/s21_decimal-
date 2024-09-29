@@ -119,12 +119,12 @@ int main(void){
 
     //BINARY DIV TEST
 
-    s21_decimal value = {0xFFF123F, 0xF452FFF, 0xFFFFF, 0x00000000};
-    s21_decimal divisor = {0xFFF1FF, 0x45, 0x0, 0x0};
-    binary_search_div(value, divisor, &result);
-    info_decimal(value);
-    info_decimal(divisor);
-    info_decimal(result);
+    // s21_decimal value = {0xFFF123F, 0xF452FFF, 0xFFFFF, 0x00000000};
+    // s21_decimal divisor = {0xFFF1FF, 0x45, 0x0, 0x0};
+    // binary_search_div(value, divisor, &result);
+    // info_decimal(value);
+    // info_decimal(divisor);
+    // info_decimal(result);
 
 
     //SHIFT RIGHT TEST
@@ -140,6 +140,28 @@ int main(void){
     // info_decimal(value);
     // shift_decimal_left(&value, 90);
     // info_decimal(value);
+
+    //LEN TEST
+
+    // s21_decimal value = {0x63153, 0x0, 0x0, 0x00010000};
+    // printf("%d", get_normalized_len(value));
+
+    //MAX LEN TEST?
+
+    s21_decimal value = {0xBBBBB, 0x0, 0x0, 0x00000000};
+    s21_decimal EXP_UTIL = {0x0, 0x0, 0x0, 0x00000000};
+    s21_decimal value_2 = {0x65231, 0x0, 0x0, 0x00000000};
+
+    // add_overflow_check(value, value_2, &result);
+    // info_decimal(result);
+
+    // int len = get_normalized_len(value);
+    // info_decimal(value);
+    // set_exponent(&EXP_UTIL, 28 - len + 1);
+    // printf("OVERFLOW: %d\n", level_exponent(&value, &EXP_UTIL));
+
+    get_num_to_max_exponent(&value);
+    info_decimal(value);
     
     return 0;
 }

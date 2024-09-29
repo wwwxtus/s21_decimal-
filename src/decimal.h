@@ -25,7 +25,6 @@ void get_zero(s21_decimal *value);
 void s21_clear_decimal(s21_decimal *decimal);
 s21_decimal s21_decimal_get_one(void);
 
-
 //Дебаг
 void pause(void);
 void info_decimal(s21_decimal decimal);
@@ -45,7 +44,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int s21_negate(s21_decimal value, s21_decimal *result);
 int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int add_binary(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
-void level_exponent(s21_decimal *value_1, s21_decimal *value_2);
+int level_exponent(s21_decimal *value_1, s21_decimal *value_2);
 void set_exponent(s21_decimal *value, int exp);
 void set_sign_pos(s21_decimal *value);
 void set_sign_neg(s21_decimal *value);
@@ -79,5 +78,8 @@ int s21_round(s21_decimal value, s21_decimal *result);
 void get_float_part(s21_decimal value, s21_decimal *float_part);
 int is_even(s21_decimal value);
 void binary_search_div(s21_decimal value1, s21_decimal value2, s21_decimal *result);
+int get_normalized_len(s21_decimal value);
+int add_overflow_check(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+void get_num_to_max_exponent(s21_decimal *value);
 
 #endif

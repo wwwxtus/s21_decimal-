@@ -133,6 +133,7 @@ void shift_decimal_right(s21_decimal *value, int shift) {
 void shift_decimal_left(s21_decimal *value, int shift) {
     unsigned int temp = 0;
     unsigned int temp2 = 0;
+    unsigned int temp3 = 0;
 
     if(shift != 0){
 
@@ -153,6 +154,7 @@ void shift_decimal_left(s21_decimal *value, int shift) {
             value->bits[1] = ((unsigned int)value->bits[1] << shift) ^ temp;
 
             value->bits[2] = ((unsigned int)value->bits[2] << shift) ^ temp2;
+
         }
         
     }
@@ -175,10 +177,14 @@ void set_exponent(s21_decimal *value, int exp) {
     }
 }
 
-void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
+int level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
 
     s21_decimal resultN = {{0, 0, 0, 0}};
-    
+    int overflow = 0;
+
+    set_sign_pos(value_1);
+    set_sign_pos(value_2);
+
     if (get_exponent(*value_1) < get_exponent(*value_2)) {
         int exp_diff = get_exponent(*value_2) - get_exponent(*value_1);
         set_exponent(value_1, get_exponent(*value_2));
@@ -194,7 +200,11 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
             shift_decimal_left(value_1, 3);
             shift_decimal_left(&valueN, 1);
 
-            s21_add(*value_1, valueN, &resultN);
+            if(add_overflow_check(*value_1, valueN, &resultN)){
+                overflow = 1;
+                
+            }
+            //s21_add(*value_1, valueN, &resultN);
 
             value_1->bits[0] = resultN.bits[0];
             value_1->bits[1] = resultN.bits[1];
@@ -209,6 +219,7 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
         set_exponent(value_2, get_exponent(*value_1));
         set_exponent(&resultN, get_exponent(*value_1));
 
+
         for (int i = 0; i < exp_diff; i++) {
             s21_decimal valueN;
 
@@ -220,7 +231,10 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
             shift_decimal_left(value_2, 3);
             shift_decimal_left(&valueN, 1);
 
-            s21_add(*value_2, valueN, &resultN);
+            if(add_overflow_check(*value_2, valueN, &resultN)){
+                overflow = 1;
+            }
+            //s21_add(*value_2, valueN, &resultN);
 
             value_2->bits[0] = resultN.bits[0];
             value_2->bits[1] = resultN.bits[1];
@@ -228,6 +242,8 @@ void level_exponent(s21_decimal *value_1, s21_decimal *value_2) {
 
         }
     }
+
+    return overflow;
 }
 
 //Обнуляем все биты числа decimal
@@ -341,5 +357,89 @@ void get_float_part(s21_decimal value, s21_decimal *float_part) {
     level_exponent(&whole_part_temp, &value);
     s21_sub(value, whole_part_temp, float_part);
     set_exponent(float_part, get_exponent(value));
+
+}
+
+int get_normalized_len(s21_decimal value){
+    
+    int len = 0;
+
+    s21_decimal ONE = {0x1, 0x0, 0x0, 0x0};
+    s21_decimal NINE = {0x9, 0x0, 0x0, 0x0};
+    s21_decimal truncated = {0x0, 0x0, 0x0, 0x0};
+
+    int original_value_exponent = get_exponent(value);
+
+    while(!(s21_is_greater_or_equal(truncated, ONE) && s21_is_less_or_equal(truncated, NINE))){
+        get_zero(&truncated);
+        s21_truncate(value, &truncated);
+        set_exponent(&value, get_exponent(value) + 1);
+        len++;
+    }
+
+    set_exponent(&value, original_value_exponent);
+
+    return len;
+}
+
+
+int add_overflow_check(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
+    //Добавил строку ниже чтобы XOR на знаки сделать. Мы получаем маску для XOR на знак.
+    int overflow = 0;
+    //Первый этап алгоритма суммы - XOR двух чисел.
+    result->bits[0] = value_1.bits[0] ^ value_2.bits[0];
+    result->bits[1] = value_1.bits[1] ^ value_2.bits[1];
+    result->bits[2] = value_1.bits[2] ^ value_2.bits[2];
+    result->bits[3] = 0;
+
+    for (int i = 0; i < 4; i++) {
+        unsigned int carry = value_1.bits[i] & value_2.bits[i];
+        
+        while (carry != 0){
+            unsigned int siftedcarry = carry << 1;
+
+            //Здесь идёт проверка на перенос.
+            if((i != 3 && ((carry >> 31 & 1)) && (value_1.bits[i] >> 31 & 1)) 
+            || (i != 3 && (carry >> 31 & 1) && (value_2.bits[i] >> 31 & 1))
+            || (i != 3 && (carry >> 31 & 1) && (result->bits[i] >> 31 & 1))){
+                if(result->bits[i + 1] == 0xFFFFFFFF && i == 0){
+                    
+                    if(result->bits[i + 2] == 0xFFFFFFFF){
+                        result->bits[i + 3] += 1;
+                    }
+                    result->bits[i + 2] += 1;
+                }
+                
+                result->bits[i + 1] = result->bits[i + 1] + 1;
+            }
+
+            carry = result->bits[i] & siftedcarry;
+
+            result->bits[i] ^= siftedcarry;
+        }
+    }
+
+    if(((result->bits[3] << 16) >> 16) != 0){
+        overflow = 1;
+    }
+
+    return overflow;
+}
+
+void get_num_to_max_exponent(s21_decimal *value){
+
+    s21_decimal EXPONENT_UTIL = {0x0, 0x0, 0x0, 0x0};
+    s21_decimal value_copy = *value;
+    int num_len = get_normalized_len(*value);
+    set_exponent(&EXPONENT_UTIL, 28);
+
+    int i_exponent = 28;
+    while(level_exponent(value, &EXPONENT_UTIL)){
+        info_decimal(*value);
+        pause();
+        i_exponent--;
+        set_exponent(&EXPONENT_UTIL, i_exponent);
+        *value = value_copy;
+    }
 
 }
