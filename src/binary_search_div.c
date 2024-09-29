@@ -1,5 +1,29 @@
 #include "decimal.h"
 
+int is_correct_decimal(s21_decimal decimal) {
+    if(get_exponent(decimal) > 0x7F || get_exponent(decimal) < 0x0) {
+        return 0;
+    }
+    return 1;
+}
+
+int max_exp(s21_decimal value){
+    s21_decimal EXPONENT_UTIL = {0x0, 0x0, 0x0, 0x0};
+    s21_decimal value_copy = value;
+    int num_len = get_normalized_len(value);
+    set_exponent(&EXPONENT_UTIL, 28);
+
+    int i_exponent = 28;
+    while(level_exponent(&value_copy, &EXPONENT_UTIL)){
+        i_exponent--;
+        set_exponent(&EXPONENT_UTIL, i_exponent);
+        value_copy = value;
+    }
+
+    return i_exponent;
+}
+
+
 void binary_search_div(s21_decimal value1, s21_decimal value2, s21_decimal *result) { 
 
     set_sign_pos(result);
@@ -45,26 +69,36 @@ int s21_div_remainder(s21_decimal value_1, s21_decimal value_2, s21_decimal *quo
     s21_decimal number = *quotient;
     s21_decimal tmp;
     s21_decimal tmp_remainder = *remainder;
-    info_decimal(tmp_remainder);
+
     int count = 0;
+    int check = max_exp(number);
+
+    printf("check %d\n", check);
+
     s21_decimal ten = {0xA, 0x0, 0x0, 0x0};
     s21_decimal zero = {0x0, 0x0, 0x0, 0x0};
 
     s21_decimal check_remainder = *remainder;
     while (count < 28 && !s21_is_equal(tmp_remainder, zero)) {
+        s21_decimal number_stored = number;
+        s21_decimal remainder_stored = tmp_remainder; 
+
         s21_mul(number, ten, &number);
         s21_decimal help_rem;
         s21_mul(tmp_remainder, ten, &tmp_remainder);
         binary_search_div(tmp_remainder, value_2, &help_rem);
         s21_add(number, help_rem, &number);
-        info_decimal(tmp_remainder);
 
         s21_decimal help;
         s21_mul(help_rem, value_2, &help);
         s21_sub(tmp_remainder, help, &tmp_remainder);
 
-        info_decimal(tmp_remainder);
-        
+        if (!is_correct_decimal(number)) {
+            number = number_stored;
+            tmp_remainder = remainder_stored;
+            break;
+        }
+
         ++count;
         printf("Count: %d\n", count);
     }
@@ -97,7 +131,6 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_decimal res;
 
     binary_search_div(value_1, value_2, &res);
-    info_decimal(res);
     
     s21_decimal help;
     s21_mul(res, value_2, &help);

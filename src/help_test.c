@@ -69,12 +69,12 @@ int main(void){
     // s21_mul(mul_test1, mul_test2, &result);
     // info_decimal(result);
 
-    s21_decimal div_test1 = {0x5, 0x0, 0x0, 0x0};
-    s21_decimal div_test2 = {0x3, 0x0, 0x0, 0x0};
-    info_decimal(div_test1);
-    info_decimal(div_test2);
-    s21_div(div_test1, div_test2, &result);
-    info_decimal(result);
+    // s21_decimal div_test1 = {0x15, 0x0, 0x0, 0x0};
+    // s21_decimal div_test2 = {0x3, 0x0, 0x0, 0x0};
+    // info_decimal(div_test1);
+    // info_decimal(div_test2);
+    // s21_div(div_test1, div_test2, &result);
+    // info_decimal(result);
 
 
     // s21_decimal exp_test = {0x145, 0x0, 0x0, 0x0};
@@ -119,13 +119,12 @@ int main(void){
 
     //BINARY DIV TEST
 
-    // s21_decimal value = {0xFFF123F, 0xF452FFF, 0xFFFFF, 0x00000000};
-    // s21_decimal divisor = {0xFFF1FF, 0x45, 0x0, 0x0};
-    // binary_search_div(value, divisor, &result);
-    // info_decimal(value);
-    // info_decimal(divisor);
-    // info_decimal(result);
-
+    s21_decimal value = {0xFFF123F, 0xF452FFF, 0xFFFFF, 0x0};
+    s21_decimal divisor = {0xFFF1FF, 0x45, 0x0, 0x0};
+    s21_div(value, divisor, &result);
+    info_decimal(value);
+    info_decimal(divisor);
+    info_decimal(result);
 
     //SHIFT RIGHT TEST
 
