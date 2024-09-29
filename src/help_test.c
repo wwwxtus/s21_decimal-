@@ -69,12 +69,12 @@ int main(void){
     // s21_mul(mul_test1, mul_test2, &result);
     // info_decimal(result);
 
-    // s21_decimal div_test1 = {0x54E39FE, 0x0, 0x0, 0x0};
-    // s21_decimal div_test2 = {0x14DE, 0x0, 0x0, 0x0};
-    // info_decimal(div_test1);
-    // info_decimal(div_test2);
-    // s21_div(div_test1, div_test2, &result);
-    // info_decimal(result);
+    s21_decimal div_test1 = {0x5, 0x0, 0x0, 0x0};
+    s21_decimal div_test2 = {0x3, 0x0, 0x0, 0x0};
+    info_decimal(div_test1);
+    info_decimal(div_test2);
+    s21_div(div_test1, div_test2, &result);
+    info_decimal(result);
 
 
     // s21_decimal exp_test = {0x145, 0x0, 0x0, 0x0};
@@ -148,9 +148,19 @@ int main(void){
 
     //MAX LEN TEST?
 
-    s21_decimal value = {0xBBBBB, 0x0, 0x0, 0x00000000};
-    s21_decimal EXP_UTIL = {0x0, 0x0, 0x0, 0x00000000};
-    s21_decimal value_2 = {0x65231, 0x0, 0x0, 0x00000000};
+    // s21_decimal value = {0xBBBBB, 0x0, 0x0, 0x00000000};
+    // s21_decimal EXP_UTIL = {0x0, 0x0, 0x0, 0x00000000};
+    // s21_decimal value_2 = {0x65231, 0x0, 0x0, 0x00000000};
+
+    // s21_decimal value = {0xBBBBB, 0x0, 0x0, 0x00000000};
+    // s21_decimal value_2 = {0x65231, 0x0, 0x0, 0x00000000};
+    // s21_decimal result = {0x0, 0x0, 0x0, 0x0};
+
+    // s21_decimal MAX = {0x9999999A, 0x99999999, 0x19999999, 0x001B0000};
+    // s21_decimal ONE = {0x1, 0x0, 0x0, 0x00000000};
+    // level_exponent(&MAX, &ONE);
+    // s21_add(MAX, ONE, &result);
+    // info_decimal(result);
 
     // add_overflow_check(value, value_2, &result);
     // info_decimal(result);
@@ -160,8 +170,5 @@ int main(void){
     // set_exponent(&EXP_UTIL, 28 - len + 1);
     // printf("OVERFLOW: %d\n", level_exponent(&value, &EXP_UTIL));
 
-    get_num_to_max_exponent(&value);
-    info_decimal(value);
-    
     return 0;
 }

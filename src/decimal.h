@@ -6,7 +6,7 @@
 
 #define POSITIVE 0
 #define NEGATIVE 1
-
+#define OVERFLOW 1
 
 typedef struct decimal {
     int bits[4];
@@ -81,5 +81,6 @@ void binary_search_div(s21_decimal value1, s21_decimal value2, s21_decimal *resu
 int get_normalized_len(s21_decimal value);
 int add_overflow_check(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 void get_num_to_max_exponent(s21_decimal *value);
+s21_decimal s21_decimal_get_inf(void);
 
 #endif

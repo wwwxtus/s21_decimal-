@@ -443,3 +443,10 @@ void get_num_to_max_exponent(s21_decimal *value){
     }
 
 }
+
+
+s21_decimal s21_decimal_get_inf(void) {
+    s21_decimal result = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x7FFFFFFF}};
+
+    return result;
+}
