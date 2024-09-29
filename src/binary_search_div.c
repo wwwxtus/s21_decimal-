@@ -93,7 +93,7 @@ int s21_div_remainder(s21_decimal value_1, s21_decimal value_2, s21_decimal *quo
         tmp_remainder = res_tmp_remainder;
 
         s21_decimal tmp_help_rem = help_rem;
-        info_decimal(help_rem);
+        // info_decimal(help_rem);
 
         if (!s21_is_equal(help_rem, zero)) {
             check += (28 - max_exp(tmp_help_rem) + 1);
@@ -104,16 +104,16 @@ int s21_div_remainder(s21_decimal value_1, s21_decimal value_2, s21_decimal *quo
 
         s21_decimal help;
         s21_mul(help_rem, value_2, &help);
-        info_decimal(help);
+        // info_decimal(help);
 
         if (!s21_is_equal(help, zero)) {
             s21_sub(tmp_remainder, help, &res_tmp_remainder);
             tmp_remainder = res_tmp_remainder;
         }
-        info_decimal(tmp_remainder);
+        // info_decimal(tmp_remainder);
         ++count;
 
-        if (check > 28) {
+        if (check >= 28) {
             break;
         }
 
@@ -138,27 +138,38 @@ int s21_div_handle(s21_decimal value_2, s21_decimal res, s21_decimal remainder, 
 }
 
 int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-    int count = 0;
-    get_zero(result);
+    s21_decimal zero;
+    get_zero(&zero);
+    if (s21_is_equal(zero, value_2)) {
+        printf("Error: Division by zero\n");
+        return 1;
+    } else {
+        int count = 0;
+        get_zero(result);
 
-    int sign1 = get_sign(value_1);
-    int sign2 = get_sign(value_2);
+        int sign1 = get_sign(value_1);
+        int sign2 = get_sign(value_2);
 
-    s21_decimal remainder;
-    s21_decimal res;
+        set_exponent(&value_1, 0);
+        set_exponent(&value_2, 0);
 
-    binary_search_div(value_1, value_2, &res);
-    
-    s21_decimal help;
-    s21_mul(res, value_2, &help);
-    s21_sub(value_1, help, &remainder);
 
-    count = s21_div_remainder(value_1, value_2, &res, &remainder);
-    *result = res;
-    set_exponent(result, count);
+        s21_decimal remainder;
+        s21_decimal res;
 
-    if (sign1 != sign2) {
-        set_sign_neg(result);
+        binary_search_div(value_1, value_2, &res);
+        
+        s21_decimal help;
+        s21_mul(res, value_2, &help);
+        s21_sub(value_1, help, &remainder);
+
+        count = s21_div_remainder(value_1, value_2, &res, &remainder);
+        *result = res;
+        set_exponent(result, count);
+
+        if (sign1 != sign2) {
+            set_sign_neg(result);
+        }
     }
     
     return 0;
