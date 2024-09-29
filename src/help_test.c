@@ -119,12 +119,14 @@ int main(void){
 
     //BINARY DIV TEST
 
-    s21_decimal value = {0xFFF123F, 0xFFFFFFFF, 0xFFFFFF, 0x00000000};
+    s21_decimal value = {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFF, 0x00000000};
     s21_decimal divisor = {0x5, 0x0, 0x0, 0x0};
     binary_search_div(value, divisor, &result);
     info_decimal(value);
     info_decimal(result);
-
     
     return 0;
 }
+
+//61897001964269012939649843
+//19342813113834066795298815
