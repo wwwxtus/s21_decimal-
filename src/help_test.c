@@ -5,12 +5,12 @@
 int main(void){
 
     // -201180194235 | Обратный код сразу сделал
-    s21_decimal decimal = {0xD, 0x0, 0x0, 0x00000000};
+    // s21_decimal decimal = {0xD, 0x0, 0x0, 0x00000000};
     
-    //  231180194235
-    s21_decimal decimal2 = {0x7, 0x0, 0x0, 0x80000000};
+    // //  231180194235
+    // s21_decimal decimal2 = {0x7, 0x0, 0x0, 0x80000000};
     
-    // 30000000000 | 6fc23ac00
+    // // 30000000000 | 6fc23ac00
     s21_decimal result = {0x0, 0x0, 0x0, 0x00000000};
 
 
@@ -120,8 +120,12 @@ int main(void){
     //BINARY DIV TEST
     // s21_decimal value =  0x0, 0x0, 0x80020000};
             
-    s21_decimal value = {0x9923738C, 0x4FFCABBD, 0x0000000A, 0x00040000};
-    s21_decimal divisor = {0x21D916BD, 0x0AFE266E, 0x0, 0x00110000};
+    // s21_decimal divisor = {0x9923738C, 0x4FFCABBD, 0x0000000A, 0x00040000};
+    // s21_decimal value = {0x21D916BD, 0x0AFE266E, 0x0, 0x00110000};
+    
+    s21_decimal value = {0x5, 0x0, 0x0, 0x0};
+    s21_decimal divisor = {0xA, 0x0, 0x0, 0x0};
+    
     s21_div(value, divisor, &result);
     info_decimal(value);
     info_decimal(divisor);

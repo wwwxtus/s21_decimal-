@@ -129,8 +129,6 @@ int s21_div_remainder(s21_decimal value_1, s21_decimal value_2, s21_decimal *quo
             break; 
         } 
 
-        
-
         printf("Count: %d\n", count);
     }
 
@@ -152,8 +150,15 @@ int s21_div_handle(s21_decimal value_2, s21_decimal res, s21_decimal remainder, 
 }
 
 int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    printf("Good result");
+    printf("Good result");
+    printf("Good result");
+    printf("Good result");
+    printf("Good result");
+
     s21_decimal zero;
     get_zero(&zero);
+
     if (s21_is_equal(zero, value_2)) {
         printf("Error: Division by zero\n");
         return 1;
