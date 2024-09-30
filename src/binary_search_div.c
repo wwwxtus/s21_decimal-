@@ -69,6 +69,7 @@ int s21_div_remainder(s21_decimal value_1, s21_decimal value_2, s21_decimal *quo
     s21_decimal number = *quotient;
     s21_decimal tmp;
     s21_decimal tmp_remainder = *remainder;
+    s21_decimal ONE = {0x1, 0x0, 0x0, 0x0};
 
     int count = 0;
     int check = 28 - max_exp(number) + 1;
@@ -79,9 +80,8 @@ int s21_div_remainder(s21_decimal value_1, s21_decimal value_2, s21_decimal *quo
     s21_decimal zero = {0x0, 0x0, 0x0, 0x0};
 
     s21_decimal check_remainder = *remainder;
+    s21_decimal mid = {0x8, 0x0, 0x0, 0x0};
     while (count < 28 && !s21_is_equal(tmp_remainder, zero)) {
-        s21_decimal number_stored = number;
-
         s21_decimal res_tmp_remainder;
         get_zero(&res_tmp_remainder);
 
@@ -113,9 +113,23 @@ int s21_div_remainder(s21_decimal value_1, s21_decimal value_2, s21_decimal *quo
         // info_decimal(tmp_remainder);
         ++count;
 
-        if (check >= 28) {
+        if (check == 28) {
+            s21_decimal res_tmp_remainder;
+            get_zero(&res_tmp_remainder);
+
+            s21_mul(tmp_remainder, ten, &res_tmp_remainder);
+            binary_search_div(res_tmp_remainder, value_2, &help_rem);
+            if (s21_is_greater(help_rem, mid)) {
+                s21_add(number, ONE, &number);
+            }
+
             break;
         }
+        if (check >= 28) {
+            break; 
+        } 
+
+        
 
         printf("Count: %d\n", count);
     }
