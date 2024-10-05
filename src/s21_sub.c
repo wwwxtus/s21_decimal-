@@ -19,8 +19,21 @@ s21_decimal s21_decimal_get_one(void) {
 //Разность двух decimal
 int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int err_code = 0;
+
+    s21_decimal ZERO = {0, 0, 0, 0};
+
     //Инициализирую результат нулями
     get_zero(result);
+
+    int zero_flag_v1 = 0;
+    int zero_flag_v2 = 0;
+
+    if(s21_is_equal(ZERO, value_1)){
+        zero_flag_v1 = 1;
+    }
+    if(s21_is_equal(ZERO, value_2)){
+        zero_flag_v2 = 1;
+    }
 
     //Узнаю какие знаки у чисел
     int value_1_sign = get_sign(value_1);
@@ -31,52 +44,86 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
        Сложить a и b 
     */
     if (value_1_sign == POSITIVE && value_2_sign == POSITIVE) {
-        s21_decimal value_2n;
-        get_complement(value_2, &value_2n);
-        set_sign_neg(&value_2n);
         
-        add_binary(value_1, value_2n, result);
+        if(zero_flag_v1 && !zero_flag_v2){
+            s21_negate(value_2, result);
+        }else if(zero_flag_v2 && !zero_flag_v1){
+            *result = value_1;
+        }else if(zero_flag_v1 && zero_flag_v2){
+            *result = ZERO;
+        }else{
+            s21_decimal value_2n;
+            get_complement(value_2, &value_2n);
+            set_sign_neg(&value_2n);
+        
+            add_binary(value_1, value_2n, result);
 
-        if(get_sign(*result) == NEGATIVE) {
-            get_complement(*result, result);
-        }
+            if(get_sign(*result) == NEGATIVE) {
+                get_complement(*result, result);
+            }
+        }  
     }
     /* a - положитеьное, b - отрицательное => a - (-b) => a + b
        Сложить a и b 
     */ 
     else if (value_1_sign == POSITIVE && value_2_sign == NEGATIVE) {
-        s21_negate(value_2, &value_2);
-        add_binary(value_1, value_2, result);
+
+        if(zero_flag_v1 && !zero_flag_v2){
+            s21_negate(value_2, result);
+        }else if(zero_flag_v2 && !zero_flag_v1){
+            *result = value_1;
+        }else if(zero_flag_v1 && zero_flag_v2){
+            *result = ZERO;
+        }else{
+            s21_negate(value_2, &value_2);
+            add_binary(value_1, value_2, result);
+        }
+        
     } 
     /* a - отрицательное, b - положитеьное => -a - b => -(a + b)
        Сложить a и b
        Поменять знак результата 
     */ 
     else if (value_1_sign == NEGATIVE && value_2_sign == POSITIVE) {
-        s21_negate(value_1, &value_1);
-        s21_negate(value_2, &value_2);
+        
+        if(zero_flag_v1 && !zero_flag_v2){
+            s21_negate(value_2, result);
+        }else if(zero_flag_v2 && !zero_flag_v1){
+            *result = value_1;
+        }else if(zero_flag_v1 && zero_flag_v2){
+            *result = ZERO;
+        }else{
+            s21_negate(value_1, &value_1);
+            s21_negate(value_2, &value_2);
 
-        add_binary(value_1, value_2, result);
+            add_binary(value_1, value_2, result);
+        }
     } 
     /* a - отрицательное, b - отрицательное =>  -a - (-b) => -a + b
        Меньшее из a b число приводим к доп коду, далее a + b 
     */ 
     else if (value_1_sign == NEGATIVE && value_2_sign == NEGATIVE) {
-        //Удалить потом
-        printf("n n\n");
         
-        s21_decimal value_1n;
-        s21_decimal value_2n = value_2;
-        s21_negate(value_2, &value_2n);
-        get_complement(value_1, &value_1n);
+        if(zero_flag_v1 && !zero_flag_v2){
+            s21_negate(value_2, result);
+        }else if(zero_flag_v2 && !zero_flag_v1){
+            *result = value_1;
+        }else if(zero_flag_v1 && zero_flag_v2){
+            *result = ZERO;
+        }else{
+            s21_decimal value_1n;
+            s21_decimal value_2n = value_2;
+            s21_negate(value_2, &value_2n);
+            get_complement(value_1, &value_1n);
 
-        add_binary(value_2n, value_1n, result);
+            add_binary(value_2n, value_1n, result);
 
-        if(get_sign(*result) == 1){
-            get_complement(*result, result);
+            if(get_sign(*result) == 1){
+                get_complement(*result, result);
+            }
         }
-    }
 
+    }
     return err_code;
 }
 
