@@ -42,8 +42,8 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result){
 
             shift_decimal_left(&value_1n, i);
             shift_decimal_left(&value_2n, i + 1);
-            s21_add(value_1n, value_2n, &result_temp);
-            s21_add(*result, result_temp, result);
+            add_binary(value_1n, value_2n, &result_temp);
+            add_binary(*result, result_temp, result);
         
         }
 

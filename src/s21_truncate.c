@@ -7,7 +7,7 @@ void s21_truncate(s21_decimal value, s21_decimal *result){
     s21_decimal TEN = {0xA, 0x0, 0x0, 0x0};
     set_exponent(&TEN, exponent - y);
     level_exponent(&value, &TEN);
-    binary_search_div(value, TEN, result);
+    long_division(value, TEN, result);
 
     set_exponent(result, 0);
 }

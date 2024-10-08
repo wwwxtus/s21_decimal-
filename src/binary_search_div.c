@@ -23,45 +23,51 @@ int max_exp(s21_decimal value) {
     return i_exponent;
 }
 
-void binary_search_div(s21_decimal value1, s21_decimal value2, s21_decimal *result) {
-    set_sign_pos(result);
-    set_sign_pos(&value1);
-    set_sign_pos(&value2);
+// void binary_search_div(s21_decimal value1, s21_decimal value2, s21_decimal *result) {
+//     set_sign_pos(result);
+//     set_sign_pos(&value1);
+//     set_sign_pos(&value2);
 
-    s21_decimal dividend = value1;
-    s21_decimal divisor = value2;
+//     s21_decimal dividend = value1;
+//     s21_decimal divisor = value2;
 
-    s21_decimal low = {0x0, 0x0, 0x0, 0x0};
-    s21_decimal high = dividend;
-    s21_decimal mid = {0x0, 0x0, 0x0, 0x0};
-    s21_decimal ONE = {0x1, 0x0, 0x0, 0x0};
+//     s21_decimal low = {0x0, 0x0, 0x0, 0x0};
+//     s21_decimal high = dividend;
+//     s21_decimal mid = {0x0, 0x0, 0x0, 0x0};
+//     s21_decimal ONE = {0x1, 0x0, 0x0, 0x0};
 
-    while (s21_is_less_or_equal(low, high)) {
-        // mid = low + (high - low) / 2;
-        s21_decimal high_minus_low;
-        s21_sub(high, low, &high_minus_low);
-        shift_decimal_right(&high_minus_low, 1);
-        s21_add(low, high_minus_low, &mid);
+//     while (s21_is_less(low, high)) {
+//         // mid = low + (high - low) / 2;
+//         s21_decimal high_minus_low;
+//         s21_sub(high, low, &high_minus_low);
+//         shift_decimal_right(&high_minus_low, 1);
+//         add_binary(low, high_minus_low, &mid);
 
-        // mid_times_divisor = mid * divisor
-        s21_decimal mid_times_divisor;
-        s21_mul(mid, divisor, &mid_times_divisor);
+//         info_decimal(mid);
+//         pause();
 
-        if (s21_is_greater(mid_times_divisor, dividend)) {
-            // high = mid - 1
-            s21_sub(mid, ONE, &high);
-        } else {
-            *result = mid;
-            // low = mid + 1
-            s21_add(mid, ONE, &low);
-        }
+//         // mid_times_divisor = mid * divisor
+//         s21_decimal mid_times_divisor;
 
-        // info_decimal(low);
-        // info_decimal(high);
-        // info_decimal(mid);
-        // pause();
-    }
-}
+//         s21_mul(mid, divisor, &mid_times_divisor);
+
+
+//         if (s21_is_greater(mid_times_divisor, dividend)) {
+//             // high = mid - 1
+//             s21_sub(mid, ONE, &high);
+//         } else {
+//             *result = mid;
+//             // low = mid + 1
+//             add_binary(mid, ONE, &low);
+//         }
+
+//         info_decimal(low);
+//         info_decimal(high);
+//         info_decimal(mid);
+//         printf("EQUAL OR NOT: %d\n", s21_is_less_or_equal(low, high));
+//         pause();
+//     }
+// }
 
 int s21_div_remainder(s21_decimal value_1, s21_decimal value_2, s21_decimal *quotient,
                       s21_decimal *remainder) {
@@ -91,7 +97,7 @@ int s21_div_remainder(s21_decimal value_1, s21_decimal value_2, s21_decimal *quo
         s21_mul(number, ten, &number);
         s21_decimal help_rem;
         s21_mul(tmp_remainder, ten, &res_tmp_remainder);
-        binary_search_div(res_tmp_remainder, value_2, &help_rem);
+        long_division(res_tmp_remainder, value_2, &help_rem);
 
         tmp_remainder = res_tmp_remainder;
 
@@ -99,7 +105,7 @@ int s21_div_remainder(s21_decimal value_1, s21_decimal value_2, s21_decimal *quo
         // info_decimal(help_rem);
 
         if (!s21_is_equal(help_rem, zero)) {
-            check += (28 - max_exp(tmp_help_rem) + 1);
+            check += (28 - max_exp(help_rem) + 1);
         }
         printf("check %d\n", check);
 
@@ -113,6 +119,8 @@ int s21_div_remainder(s21_decimal value_1, s21_decimal value_2, s21_decimal *quo
             s21_sub(tmp_remainder, help, &res_tmp_remainder);
             tmp_remainder = res_tmp_remainder;
         }
+
+        
         // info_decimal(tmp_remainder);
         ++count;
         printf("Count: %d\n", count);
@@ -122,7 +130,7 @@ int s21_div_remainder(s21_decimal value_1, s21_decimal value_2, s21_decimal *quo
             get_zero(&res_tmp_remainder);
 
             s21_mul(tmp_remainder, ten, &res_tmp_remainder);
-            binary_search_div(res_tmp_remainder, value_2, &help_rem);
+            long_division(res_tmp_remainder, value_2, &help_rem);
             if (s21_is_greater(help_rem, mid)) {
                 s21_add(number, ONE, &number);
             }
@@ -181,15 +189,15 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         s21_decimal remainder;
         s21_decimal res;
 
-        binary_search_div(value_1, value_2, &res);
+        remainder = long_division(value_1, value_2, &res);
 
-        s21_decimal help;
+        // s21_decimal help;
 
-        get_zero(&help);
+        // get_zero(&help);
 
-        s21_mul(res, value_2, &help);
+        // s21_mul(res, value_2, &help);
 
-        s21_sub(value_1, help, &remainder);
+        // s21_sub(value_1, help, &remainder);
 
         count = s21_div_remainder(value_1, value_2, &res, &remainder);
         *result = res;
@@ -198,7 +206,7 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         } else {
             int exp_max = s21_max(exp1, exp2);
             int exp_min = s21_min(exp1, exp2);
-            set_exponent(result, exp_max - exp_min);
+            set_exponent(result, exp_max - exp_min + count);
         }
         if (sign1 != sign2) {
             set_sign_neg(result);
@@ -206,4 +214,35 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     }
 
     return 0;
+}
+
+
+s21_decimal long_division(s21_decimal dividend, s21_decimal divisor, s21_decimal *result){
+    s21_decimal Q = {0x0, 0x0, 0x0, 0x0};
+    s21_decimal R = {0x0, 0x0, 0x0, 0x0};
+
+    for(int i = 95; i >= 0; i--){
+        shift_decimal_left(&R, 1);
+        int dividend_bit = get_bit(dividend, i);
+        R.bits[0] |= dividend_bit;
+
+        if(s21_is_greater_or_equal(R, divisor)){
+            
+            s21_decimal temp_R;
+            s21_sub(R, divisor, &temp_R);
+            R = temp_R;
+
+            s21_decimal ONE = {0x1, 0x0, 0x0, 0x0};
+
+            shift_decimal_left(&ONE, i);
+            Q.bits[0] |= ONE.bits[0];
+            Q.bits[1] |= ONE.bits[1];
+            Q.bits[2] |= ONE.bits[2];
+
+        }
+    }
+
+    *result = Q;
+
+    return R;
 }

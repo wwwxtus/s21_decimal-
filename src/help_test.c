@@ -123,12 +123,16 @@ int main(void){
     // s21_decimal divisor = {0x9923738C, 0x4FFCABBD, 0x0000000A, 0x00040000};
     // s21_decimal value = {0x21D916BD, 0x0AFE266E, 0x0, 0x00110000};
     
-    s21_decimal value = {0xFFF12, 0x0, 0x0, 0x00030000};
-    s21_decimal divisor = {0xF31, 0x0, 0x0, 0x00020000};
+    s21_decimal value = {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x001C0000};
+    s21_decimal divisor = {0x642, 0x0, 0x0, 0x00000000};
     //res = 0.002110396661708956978762729
     //        0021103966617089569787627294
     
-    s21_div(value, divisor, &result);
+    // s21_div(value, divisor, &result);
+
+    
+    // s21_decimal remainder = long_division(value, divisor, &result);
+    s21_add(value, divisor, &result);
     info_decimal(value);
     info_decimal(divisor);
     info_decimal(result);
