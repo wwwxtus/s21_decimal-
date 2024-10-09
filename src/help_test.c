@@ -123,8 +123,8 @@ int main(void){
     // s21_decimal divisor = {0x9923738C, 0x4FFCABBD, 0x0000000A, 0x00040000};
     // s21_decimal value = {0x21D916BD, 0x0AFE266E, 0x0, 0x00110000};
     
-    s21_decimal value = {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x001B0000};
-    s21_decimal divisor = {0x214, 0x0, 0x0, 0x00000000};
+    s21_decimal value = {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x001C0000};
+    s21_decimal divisor = {0x243, 0x0, 0x0, 0x00020000};
 
     s21_decimal EXP_UTIL = {0, 0, 0, 0};
 

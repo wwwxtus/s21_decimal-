@@ -16,7 +16,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         int max_exp_v1 = max_exp(value_1);
         int max_exp_v2 = max_exp(value_2);
 
-        if(max_exp_v1 > max_exp_v2 - get_normalized_len(value_2)){
+        if(max_exp_v1 > max_exp_v2 - get_normalized_len(value_2) && add_overflow_check(value_1, value_2, &temp_res)){
             for(int i = 0; i <= max_exp_v1 - max_exp_v2; i++){
                 long_division(value_1, ten, &value_1);
                 original_exponent_v1 -= 1;
@@ -24,7 +24,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
             }
         }
 
-        if(max_exp_v2 > max_exp_v1){
+        if(max_exp_v2 > max_exp_v1 - get_normalized_len(value_1) && add_overflow_check(value_1, value_2, &temp_res)){
             for(int i = 0; i <= max_exp_v2 - max_exp_v1 + 1; i++){
                 long_division(value_2, ten, &value_2);
                 original_exponent_v2 -= 1;
