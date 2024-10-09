@@ -123,15 +123,18 @@ int main(void){
     // s21_decimal divisor = {0x9923738C, 0x4FFCABBD, 0x0000000A, 0x00040000};
     // s21_decimal value = {0x21D916BD, 0x0AFE266E, 0x0, 0x00110000};
     
-    s21_decimal value = {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x001C0000};
-    s21_decimal divisor = {0x1, 0x0, 0x0, 0x00110000};
-    //res = 0.002110396661708956978762729
-    //        0021103966617089569787627294
-    
-    // s21_div(value, divisor, &result);
+    s21_decimal value = {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x001B0000};
+    s21_decimal divisor = {0x214, 0x0, 0x0, 0x00000000};
 
-    
-    // s21_decimal remainder = long_division(value, divisor, &result);
+    s21_decimal EXP_UTIL = {0, 0, 0, 0};
+
+    // printf("LEN: %d\n", get_normalized_len(divisor));
+    // pause();
+
+    // set_exponent(&EXP_UTIL, 28);
+    // level_exponent(&divisor, &EXP_UTIL);
+    // info_decimal(divisor);
+
     s21_add(value, divisor, &result);
     info_decimal(value);
     info_decimal(divisor);

@@ -16,16 +16,16 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         int max_exp_v1 = max_exp(value_1);
         int max_exp_v2 = max_exp(value_2);
 
-        if(s21_is_greater(value_1, value_2)){
-            for(int i = 0; i < max_exp_v1 - max_exp_v2; i++){
+        if(max_exp_v1 > max_exp_v2 - get_normalized_len(value_2)){
+            for(int i = 0; i <= max_exp_v1 - max_exp_v2; i++){
                 long_division(value_1, ten, &value_1);
                 original_exponent_v1 -= 1;
                 set_exponent(&value_1, original_exponent_v1);
             }
         }
 
-        if(s21_is_greater(value_2, value_1) ){
-            for(int i = 0; i < max_exp_v2 - max_exp_v1 + 1; i++){
+        if(max_exp_v2 > max_exp_v1){
+            for(int i = 0; i <= max_exp_v2 - max_exp_v1 + 1; i++){
                 long_division(value_2, ten, &value_2);
                 original_exponent_v2 -= 1;
                 set_exponent(&value_2, original_exponent_v2);
