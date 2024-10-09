@@ -392,6 +392,9 @@ int add_overflow_check(s21_decimal value_1, s21_decimal value_2, s21_decimal *re
     result->bits[2] = value_1.bits[2] ^ value_2.bits[2];
     result->bits[3] = 0;
 
+    value_1.bits[3] = 0;
+    value_2.bits[3] = 0;
+
     for (int i = 0; i < 4; i++) {
         unsigned int carry = value_1.bits[i] & value_2.bits[i];
         

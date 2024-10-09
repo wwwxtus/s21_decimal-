@@ -13,19 +13,24 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         int original_exponent_v1 = get_exponent(value_1);
         int original_exponent_v2 = get_exponent(value_2);
 
+        int handled_flag = 0;
+
         int max_exp_v1 = max_exp(value_1);
         int max_exp_v2 = max_exp(value_2);
 
-        if(max_exp_v1 > max_exp_v2 - get_normalized_len(value_2) && add_overflow_check(value_1, value_2, &temp_res)){
-            for(int i = 0; i <= max_exp_v1 - max_exp_v2; i++){
+        int len_v1 = get_normalized_len(value_1);
+        int len_v2 = get_normalized_len(value_2);
+
+        if(max_exp_v1 > max_exp_v2 - get_normalized_len(value_2) || add_overflow_check(value_1, value_2, &temp_res)){
+            for(int i = 0; i < max_exp_v1 - max_exp_v2; i++){
                 long_division(value_1, ten, &value_1);
                 original_exponent_v1 -= 1;
                 set_exponent(&value_1, original_exponent_v1);
             }
         }
 
-        if(max_exp_v2 > max_exp_v1 - get_normalized_len(value_1) && add_overflow_check(value_1, value_2, &temp_res)){
-            for(int i = 0; i <= max_exp_v2 - max_exp_v1 + 1; i++){
+        if(max_exp_v2 > max_exp_v1 - get_normalized_len(value_1) || add_overflow_check(value_1, value_2, &temp_res)){
+            for(int i = 0; i < max_exp_v2 - max_exp_v1; i++){
                 long_division(value_2, ten, &value_2);
                 original_exponent_v2 -= 1;
                 set_exponent(&value_2, original_exponent_v2);
@@ -37,7 +42,11 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         pause();
 
         if(level_exponent(&value_1, &value_2)){
-            printf("Error: Overflow\n");
+            printf("LEVEL EXPError: Overflow\n");
+        }
+
+        if(add_overflow_check(value_1, value_2, &temp_res)){
+            printf("SUM Error: Overflow\n");
         }
 
         info_decimal(value_1);
@@ -45,6 +54,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         pause();
         
         add_binary(value_1, value_2, result);
+
     } else if (value_sign_1 == POSITIVE && value_sign_2 == NEGATIVE) {
         set_sign_pos(&value_2);
         s21_sub(value_1, value_2, result);
@@ -66,7 +76,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         int max_exp_v2 = max_exp(value_2);
 
         if(s21_is_greater(value_1, value_2) ){
-            for(int i = 0; i <= max_exp_v1 - max_exp_v2; i++){
+            for(int i = 0; i <= max_exp_v1 - max_exp_v2 ; i++){
                 long_division(value_1, ten, &value_1);
                 original_exponent_v1 -= 1;
                 set_exponent(&value_1, original_exponent_v1);
